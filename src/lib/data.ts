@@ -1,12 +1,13 @@
 /**
- * Data access layer — queries over seed data.
+ * Data access layer — queries over source data and live feed items.
  *
- * When migrating to a real database (Supabase/Prisma), swap these
- * implementations while keeping the same signatures.
+ * Source data comes from the seed file (static).
+ * Feed item data is loaded at build time from live RSS feeds
+ * (with seed-data fallback for sources whose feeds fail).
  */
 
 import { sources } from "@/data/sources";
-import { feedItems } from "@/data/feed-items";
+import { loadFeedItems } from "@/lib/feed/loader";
 import type {
   Source,
   FeedItem,
@@ -69,16 +70,18 @@ export function getRelatedSources(source: Source, limit = 5): Source[] {
     .slice(0, limit);
 }
 
-// ─── Feed Items ────────────────────────────────────────────────────────────────
+// ─── Feed Items (async — loaded from live RSS at build time) ───────────────────
 
-export function getAllFeedItems(): FeedItem[] {
+export async function getAllFeedItems(): Promise<FeedItem[]> {
+  const feedItems = await loadFeedItems();
   return [...feedItems].sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
 }
 
-export function getFeedItemsBySource(sourceId: string): FeedItem[] {
+export async function getFeedItemsBySource(sourceId: string): Promise<FeedItem[]> {
+  const feedItems = await loadFeedItems();
   return feedItems
     .filter((fi) => fi.sourceId === sourceId)
     .sort(
@@ -87,7 +90,8 @@ export function getFeedItemsBySource(sourceId: string): FeedItem[] {
     );
 }
 
-export function getFeedItemsByTopic(topic: TopicSlug): FeedItem[] {
+export async function getFeedItemsByTopic(topic: TopicSlug): Promise<FeedItem[]> {
+  const feedItems = await loadFeedItems();
   return feedItems
     .filter((fi) => fi.topics.includes(topic))
     .sort(
@@ -96,7 +100,8 @@ export function getFeedItemsByTopic(topic: TopicSlug): FeedItem[] {
     );
 }
 
-export function getFeedItemsByCategory(category: CategorySlug): FeedItem[] {
+export async function getFeedItemsByCategory(category: CategorySlug): Promise<FeedItem[]> {
+  const feedItems = await loadFeedItems();
   return feedItems
     .filter((fi) => fi.categories.includes(category))
     .sort(
@@ -105,11 +110,13 @@ export function getFeedItemsByCategory(category: CategorySlug): FeedItem[] {
     );
 }
 
-export function getLatestFeedItems(limit = 12): FeedItem[] {
-  return getAllFeedItems().slice(0, limit);
+export async function getLatestFeedItems(limit = 12): Promise<FeedItem[]> {
+  const all = await getAllFeedItems();
+  return all.slice(0, limit);
 }
 
-export function getFeaturedFeedItems(): FeedItem[] {
+export async function getFeaturedFeedItems(): Promise<FeedItem[]> {
+  const feedItems = await loadFeedItems();
   return feedItems
     .filter((fi) => fi.isFeatured)
     .sort(
@@ -118,7 +125,8 @@ export function getFeaturedFeedItems(): FeedItem[] {
     );
 }
 
-export function searchFeedItems(query: string): FeedItem[] {
+export async function searchFeedItems(query: string): Promise<FeedItem[]> {
+  const feedItems = await loadFeedItems();
   const q = query.toLowerCase();
   return feedItems.filter(
     (fi) =>
@@ -129,9 +137,9 @@ export function searchFeedItems(query: string): FeedItem[] {
 
 // ─── Combined Search ───────────────────────────────────────────────────────────
 
-export function globalSearch(query: string) {
+export async function globalSearch(query: string) {
   return {
     sources: searchSources(query),
-    feedItems: searchFeedItems(query),
+    feedItems: await searchFeedItems(query),
   };
 }

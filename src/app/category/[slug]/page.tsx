@@ -35,7 +35,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   if (!category) notFound();
 
   const sources = getSourcesByCategory(category.slug);
-  const feedItems = getFeedItemsByCategory(category.slug);
+  const feedItems = await getFeedItemsByCategory(category.slug);
   const Icon = getIcon(category.icon);
 
   return (

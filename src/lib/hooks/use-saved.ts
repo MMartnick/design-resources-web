@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 
 const STORAGE_KEY = "designcurrent-saved";
 
@@ -11,8 +11,7 @@ const EMPTY: string[] = [];
 let cachedRaw: string | null = null;
 let cachedParsed: string[] = EMPTY;
 
-function getSnapshot(): string[] {
-  if (typeof window === "undefined") return EMPTY;
+function readLocalStorage(): string[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw === cachedRaw) return cachedParsed;
@@ -24,13 +23,8 @@ function getSnapshot(): string[] {
   }
 }
 
-function getServerSnapshot(): string[] {
-  return EMPTY;
-}
-
 function subscribe(callback: () => void) {
   window.addEventListener("storage", callback);
-  // Custom event for same-tab updates
   window.addEventListener("saved-changed", callback);
   return () => {
     window.removeEventListener("storage", callback);
@@ -40,17 +34,31 @@ function subscribe(callback: () => void) {
 
 function saveTo(ids: string[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+  // Update cache immediately so getSnapshot returns the new value
+  cachedRaw = JSON.stringify(ids);
+  cachedParsed = ids;
   window.dispatchEvent(new Event("saved-changed"));
 }
 
 export function useSaved(sourceId?: string) {
-  const savedIds = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  // Defer to client state after mount to avoid hydration mismatches.
+  // Server-rendered HTML always shows "not saved".
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
+  const externalIds = useSyncExternalStore(
+    subscribe,
+    readLocalStorage,
+    () => EMPTY,
+  );
+
+  // Before mount, always return EMPTY to match SSR output
+  const savedIds = mounted ? externalIds : EMPTY;
   const isSaved = sourceId ? savedIds.includes(sourceId) : false;
 
   const toggle = useCallback(() => {
     if (!sourceId) return;
-    const current = getSnapshot();
+    const current = readLocalStorage();
     if (current.includes(sourceId)) {
       saveTo(current.filter((id) => id !== sourceId));
     } else {
@@ -59,14 +67,14 @@ export function useSaved(sourceId?: string) {
   }, [sourceId]);
 
   const addSaved = useCallback((id: string) => {
-    const current = getSnapshot();
+    const current = readLocalStorage();
     if (!current.includes(id)) {
       saveTo([...current, id]);
     }
   }, []);
 
   const removeSaved = useCallback((id: string) => {
-    const current = getSnapshot();
+    const current = readLocalStorage();
     saveTo(current.filter((i) => i !== id));
   }, []);
 

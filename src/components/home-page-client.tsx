@@ -19,28 +19,30 @@ import {
   TOPICS,
   CATEGORIES,
 } from "@/lib/constants";
-import {
-  getLatestFeedItems,
-  getFeaturedSources,
-  getEvergreenSources,
-  getAllSources,
-  globalSearch,
-} from "@/lib/data";
-import type { TopicSlug, CategorySlug } from "@/lib/types";
+import type { Source, FeedItem, TopicSlug, CategorySlug } from "@/lib/types";
 
-export function HomePageClient() {
+interface HomePageClientProps {
+  latestFeedItems: FeedItem[];
+  allFeedItems: FeedItem[];
+  featuredSources: Source[];
+  evergreenSources: Source[];
+  allSources: Source[];
+}
+
+export function HomePageClient({
+  latestFeedItems,
+  allFeedItems,
+  featuredSources,
+  evergreenSources,
+  allSources,
+}: HomePageClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const allFeedItems = useMemo(() => getLatestFeedItems(20), []);
-  const featuredSources = useMemo(() => getFeaturedSources(), []);
-  const evergreenSources = useMemo(() => getEvergreenSources(), []);
-  const allSources = useMemo(() => getAllSources(), []);
-
   // Filter feed items
   const filteredFeedItems = useMemo(() => {
-    let items = allFeedItems;
+    let items = latestFeedItems;
 
     if (selectedTopics.length > 0) {
       items = items.filter((item) =>
@@ -54,13 +56,26 @@ export function HomePageClient() {
     }
 
     return items;
-  }, [allFeedItems, selectedTopics, selectedCategories]);
+  }, [latestFeedItems, selectedTopics, selectedCategories]);
 
-  // Search results
+  // Client-side search over pre-fetched data
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) return null;
-    return globalSearch(searchQuery);
-  }, [searchQuery]);
+    const q = searchQuery.toLowerCase();
+    const matchedSources = allSources.filter(
+      (s) =>
+        s.name.toLowerCase().includes(q) ||
+        s.description.toLowerCase().includes(q) ||
+        s.topics.some((t) => t.includes(q)) ||
+        s.categories.some((c) => c.includes(q))
+    );
+    const matchedFeedItems = allFeedItems.filter(
+      (fi) =>
+        fi.title.toLowerCase().includes(q) ||
+        fi.summary.toLowerCase().includes(q)
+    );
+    return { sources: matchedSources, feedItems: matchedFeedItems };
+  }, [searchQuery, allSources, allFeedItems]);
 
   const topicOptions = TOPICS.map((t) => ({ label: t.name, value: t.slug }));
   const categoryOptions = CATEGORIES.map((c) => ({

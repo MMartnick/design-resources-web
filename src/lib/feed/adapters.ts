@@ -4,14 +4,13 @@
  * Each adapter implements the FeedAdapter interface and knows how to
  * fetch + normalise feed items from a specific source type.
  *
- * For MVP, all adapters return mocked data. When wiring up live feeds:
- * 1. Implement the `fetch()` method for each adapter type
- * 2. Register the adapter in the adapter registry
- * 3. Call `ingestAll()` on a schedule (cron / revalidation)
+ * The RSSAdapter performs live RSS/Atom parsing at build time.
+ * The ManualAdapter returns curated seed data for sources without feeds.
  */
 
 import type { FeedItem, Source } from "@/lib/types";
-import { feedItems } from "@/data/feed-items";
+import { feedItems as seedFeedItems } from "@/data/feed-items";
+import { fetchSourceFeed } from "./rss-fetcher";
 
 // ─── Adapter Interface ─────────────────────────────────────────────────────────
 
@@ -29,27 +28,22 @@ export class RSSAdapter implements FeedAdapter {
   type = "rss";
 
   async fetch(source: Source): Promise<FeedItem[]> {
-    // TODO: Wire up live RSS/Atom parsing
-    // Example implementation:
-    //
-    // const response = await fetch(source.feedUrl!, { next: { revalidate: 3600 } });
-    // const xml = await response.text();
-    // const parsed = parseRSS(xml);
-    // return parsed.items.map(item => ({
-    //   id: `fi-${source.id}-${hash(item.link)}`,
-    //   sourceId: source.id,
-    //   title: item.title,
-    //   url: item.link,
-    //   summary: item.description?.slice(0, 300) ?? '',
-    //   publishedAt: item.pubDate ?? new Date().toISOString(),
-    //   imageUrl: item.enclosure?.url,
-    //   topics: source.topics,
-    //   categories: source.categories,
-    //   isFeatured: false,
-    // }));
+    if (!source.feedUrl) {
+      // Fall back to seed data if no feed URL is configured
+      return seedFeedItems.filter((fi) => fi.sourceId === source.id);
+    }
 
-    // MVP: return mocked data for this source
-    return feedItems.filter((fi) => fi.sourceId === source.id);
+    const result = await fetchSourceFeed(source, 8);
+
+    if (result.items.length > 0) {
+      return result.items;
+    }
+
+    // Fall back to seed data if the live fetch returned nothing
+    console.warn(
+      `[RSSAdapter] No live items for ${source.name}, using seed data`,
+    );
+    return seedFeedItems.filter((fi) => fi.sourceId === source.id);
   }
 }
 
@@ -59,9 +53,12 @@ export class CustomAdapter implements FeedAdapter {
   type = "custom";
 
   async fetch(source: Source): Promise<FeedItem[]> {
-    // TODO: Implement source-specific scrapers/API calls
-    // Each source would have a registered handler function
-    return feedItems.filter((fi) => fi.sourceId === source.id);
+    // Custom sources: try RSS first if a feedUrl exists, else use seed data
+    if (source.feedUrl) {
+      const result = await fetchSourceFeed(source, 8);
+      if (result.items.length > 0) return result.items;
+    }
+    return seedFeedItems.filter((fi) => fi.sourceId === source.id);
   }
 }
 
@@ -71,8 +68,8 @@ export class ManualAdapter implements FeedAdapter {
   type = "manual";
 
   async fetch(source: Source): Promise<FeedItem[]> {
-    // Manual sources are updated by hand in the seed data
-    return feedItems.filter((fi) => fi.sourceId === source.id);
+    // Manual sources are always curated seed data
+    return seedFeedItems.filter((fi) => fi.sourceId === source.id);
   }
 }
 
@@ -93,10 +90,10 @@ export function getAdapter(source: Source): FeedAdapter | null {
 
 /**
  * Fetch fresh items from all feed-enabled sources.
- * In production, this would be called by a cron job or ISR revalidation.
+ * Called at build time to populate the static site with live content.
  */
 export async function ingestAll(
-  sources: Source[]
+  sources: Source[],
 ): Promise<FeedItem[]> {
   const results: FeedItem[] = [];
 
@@ -114,7 +111,7 @@ export async function ingestAll(
 
   return results.sort(
     (a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
 }
 

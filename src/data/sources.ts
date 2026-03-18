@@ -102,6 +102,7 @@ export const sources: Source[] = [
     evergreen: true,
     hasFeed: true,
     feedType: "rss",
+    feedUrl: "https://lostgarden.home.blog/feed/",
   },
   {
     id: "src-designer-notes",
@@ -121,6 +122,7 @@ export const sources: Source[] = [
     evergreen: true,
     hasFeed: true,
     feedType: "rss",
+    feedUrl: "https://www.designer-notes.com/?feed=rss2",
   },
 
   // ═══════════════════════════════════════════════════════
@@ -221,6 +223,7 @@ export const sources: Source[] = [
     evergreen: true,
     hasFeed: true,
     feedType: "rss",
+    feedUrl: "https://catlikecoding.com/unity/tutorials/feed.xml",
   },
 
   // ═══════════════════════════════════════════════════════
@@ -264,6 +267,7 @@ export const sources: Source[] = [
     evergreen: false,
     hasFeed: true,
     feedType: "rss",
+    feedUrl: "https://www.creativereview.co.uk/feed/",
   },
   {
     id: "src-print-magazine",
@@ -283,6 +287,7 @@ export const sources: Source[] = [
     evergreen: false,
     hasFeed: true,
     feedType: "rss",
+    feedUrl: "https://www.printmag.com/feed/",
   },
   {
     id: "src-aiga-eye-on-design",
@@ -302,6 +307,7 @@ export const sources: Source[] = [
     evergreen: false,
     hasFeed: true,
     feedType: "rss",
+    feedUrl: "https://eyeondesign.aiga.org/feed/",
   },
   {
     id: "src-adobe-learn",
@@ -340,6 +346,7 @@ export const sources: Source[] = [
     evergreen: false,
     hasFeed: true,
     feedType: "rss",
+    feedUrl: "https://www.youtube.com/feeds/videos.xml?channel_id=UCL0iAkpqV5YaIVG7xkDtS4Q",
   },
 
   // ═══════════════════════════════════════════════════════
@@ -464,6 +471,7 @@ export const sources: Source[] = [
     evergreen: false,
     hasFeed: true,
     feedType: "rss",
+    feedUrl: "https://www.schoolofmotion.com/blog/rss.xml",
   },
   {
     id: "src-adobe-video-tutorials",
@@ -506,6 +514,7 @@ export const sources: Source[] = [
     evergreen: false,
     hasFeed: true,
     feedType: "rss",
+    feedUrl: "https://magculture.com/feed/",
   },
   {
     id: "src-adobe-indesign-learn",
@@ -544,6 +553,7 @@ export const sources: Source[] = [
     evergreen: true,
     hasFeed: true,
     feedType: "rss",
+    feedUrl: "https://creativepro.com/feed/",
   },
 
   // ═══════════════════════════════════════════════════════
@@ -665,6 +675,7 @@ export const sources: Source[] = [
     evergreen: false,
     hasFeed: true,
     feedType: "rss",
+    feedUrl: "https://design.google/feed",
   },
   {
     id: "src-figma-design-basics",

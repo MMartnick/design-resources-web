@@ -9,7 +9,17 @@ export const metadata: Metadata = {
   description: "Browse resources by category — News, Tutorials, or Theory.",
 };
 
-export default function CategoriesPage() {
+export default async function CategoriesPage() {
+  // Pre-fetch all category article counts
+  const categoriesWithCounts = await Promise.all(
+    CATEGORIES.map(async (category) => {
+      const Icon = getIcon(category.icon);
+      const sourceCount = getSourcesByCategory(category.slug).length;
+      const articles = await getFeedItemsByCategory(category.slug);
+      return { category, Icon, sourceCount, articleCount: articles.length };
+    })
+  );
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-10">
@@ -24,10 +34,7 @@ export default function CategoriesPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-        {CATEGORIES.map((category) => {
-          const Icon = getIcon(category.icon);
-          const sourceCount = getSourcesByCategory(category.slug).length;
-          const articleCount = getFeedItemsByCategory(category.slug).length;
+        {categoriesWithCounts.map(({ category, Icon, sourceCount, articleCount }) => {
 
           return (
             <Link

@@ -53,7 +53,7 @@ export default async function SourcePage({ params }: SourcePageProps) {
   const source = getSourceBySlug(slug);
   if (!source) notFound();
 
-  const feedItems = getFeedItemsBySource(source.id);
+  const feedItems = await getFeedItemsBySource(source.id);
   const relatedSources = getRelatedSources(source, 3);
 
   return (

@@ -41,7 +41,7 @@ export default async function TopicPage({ params }: TopicPageProps) {
   if (!topic) notFound();
 
   const sources = getSourcesByTopic(topic.slug);
-  const feedItems = getFeedItemsByTopic(topic.slug);
+  const feedItems = await getFeedItemsByTopic(topic.slug);
   const evergreenSources = sources.filter((s) => s.evergreen);
   const featuredSources = sources.filter((s) => s.featured);
   const Icon = getIcon(topic.icon);
