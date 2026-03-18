@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BookOpen, Shield, Search, Compass, Mail, Scale, AlertCircle } from "lucide-react";
+import { BookOpen, Shield, Search, Compass, Mail, Scale, AlertCircle, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SITE_NAME, SITE_DISCLAIMER, SITE_CONTACT_EMAIL } from "@/lib/constants";
@@ -153,6 +153,34 @@ export default function AboutPage() {
               Please include the URL of the content in question and the action
               you&apos;d like taken (removal, correction, or updated attribution).
               I aim to respond within 48 hours.
+            </p>
+          </div>
+        </section>
+
+        <Separator className="my-8" />
+
+        <section className="mb-10">
+          <h2 className="text-xl font-bold tracking-tight mb-4 flex items-center gap-2">
+            <Lightbulb className="h-5 w-5 text-primary" />
+            Suggest a source
+          </h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Know a great free resource that belongs in this collection? I&apos;m
+            always looking for high-quality sources to add — especially in
+            topics that could use more coverage.
+          </p>
+          <div className="rounded-xl border border-border bg-muted/50 p-4 mb-4">
+            <a
+              href={`mailto:${SITE_CONTACT_EMAIL}?subject=Source%20suggestion%20for%20Designcurrent&body=Source%20name%3A%20%0ASource%20URL%3A%20%0ATopic%20area%3A%20%0AWhy%20it%E2%80%99s%20great%3A%20`}
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+            >
+              <Mail className="h-4 w-4" />
+              Suggest via email
+            </a>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Please include the source name, URL, topic area, and a brief
+              note on why it&apos;s useful. Sources must be free to access and
+              actively maintained.
             </p>
           </div>
         </section>

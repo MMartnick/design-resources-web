@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FilterChipBar } from "@/components/filter-chip-bar";
 import { SearchField } from "@/components/search-field";
@@ -12,6 +12,7 @@ import { TopicTile } from "@/components/topic-tile";
 import { EvergreenShelf } from "@/components/evergreen-shelf";
 import { SectionHeading } from "@/components/section-heading";
 import { EmptyState } from "@/components/empty-state";
+import { useFuseSearch } from "@/hooks/use-fuse-search";
 import {
   SITE_NAME,
   SITE_TAGLINE,
@@ -40,6 +41,9 @@ export function HomePageClient({
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [feedItemsShown, setFeedItemsShown] = useState(12);
+
+  const FEED_PAGE_SIZE = 12;
 
   // Filter feed items
   const filteredFeedItems = useMemo(() => {
@@ -59,24 +63,21 @@ export function HomePageClient({
     return items;
   }, [latestFeedItems, selectedTopics, selectedCategories]);
 
-  // Client-side search over pre-fetched data
+  // Client-side fuzzy search over pre-fetched data
+  const matchedSources = useFuseSearch(
+    allSources,
+    ["name", "description", "topics", "categories"],
+    searchQuery
+  );
+  const matchedFeedItems = useFuseSearch(
+    allFeedItems,
+    ["title", "summary"],
+    searchQuery
+  );
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) return null;
-    const q = searchQuery.toLowerCase();
-    const matchedSources = allSources.filter(
-      (s) =>
-        s.name.toLowerCase().includes(q) ||
-        s.description.toLowerCase().includes(q) ||
-        s.topics.some((t) => t.includes(q)) ||
-        s.categories.some((c) => c.includes(q))
-    );
-    const matchedFeedItems = allFeedItems.filter(
-      (fi) =>
-        fi.title.toLowerCase().includes(q) ||
-        fi.summary.toLowerCase().includes(q)
-    );
     return { sources: matchedSources, feedItems: matchedFeedItems };
-  }, [searchQuery, allSources, allFeedItems]);
+  }, [searchQuery, matchedSources, matchedFeedItems]);
 
   const topicOptions = TOPICS.map((t) => ({ label: t.name, value: t.slug }));
   const categoryOptions = CATEGORIES.map((c) => ({
@@ -220,11 +221,28 @@ export function HomePageClient({
             </div>
 
             {filteredFeedItems.length > 0 ? (
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {filteredFeedItems.slice(0, 12).map((item) => (
-                  <FeedItemCard key={item.id} item={item} />
-                ))}
-              </div>
+              <>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {filteredFeedItems.slice(0, feedItemsShown).map((item) => (
+                    <FeedItemCard key={item.id} item={item} />
+                  ))}
+                </div>
+                {feedItemsShown < filteredFeedItems.length && (
+                  <div className="mt-6 flex justify-center">
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="gap-2 rounded-xl"
+                      onClick={() =>
+                        setFeedItemsShown((prev) => prev + FEED_PAGE_SIZE)
+                      }
+                    >
+                      <ChevronDown className="h-4 w-4" />
+                      Load more articles
+                    </Button>
+                  </div>
+                )}
+              </>
             ) : (
               <EmptyState
                 icon="search"

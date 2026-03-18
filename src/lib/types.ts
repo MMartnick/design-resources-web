@@ -75,6 +75,8 @@ export interface Source {
   excerptEnabled: boolean;
   /** Free-access label shown on the source card */
   contentAccess: ContentAccessLabel;
+  /** Optional editorial note from the curator — context, tips, or personal commentary */
+  curatorNote?: string;
 }
 
 // ─── Feed Item ─────────────────────────────────────────────────────────────────

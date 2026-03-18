@@ -90,6 +90,18 @@ export default async function SourcePage({ params }: SourcePageProps) {
               </p>
             </div>
 
+            {/* Curator note */}
+            {source.curatorNote && (
+              <div className="mt-3 p-4 rounded-xl bg-sky-500/5 border border-sky-500/20 dark:bg-sky-500/10 dark:border-sky-500/20">
+                <p className="text-sm font-medium text-foreground mb-1">
+                  Curator&rsquo;s note
+                </p>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {source.curatorNote}
+                </p>
+              </div>
+            )}
+
             {/* Tags */}
             <div className="mt-6 flex flex-wrap gap-2">
               {source.topics.map((t) => (

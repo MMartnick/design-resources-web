@@ -55,6 +55,7 @@ export const SourceSchema = z.object({
   feedEnabled: z.boolean(),
   excerptEnabled: z.boolean(),
   contentAccess: ContentAccessLabelSchema,
+  curatorNote: z.string().optional(),
 });
 
 export const FeedItemSchema = z.object({

@@ -1,11 +1,14 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { FilterChipBar } from "@/components/filter-chip-bar";
 import { SearchField } from "@/components/search-field";
 import { SourceCard } from "@/components/source-card";
 import { EmptyState } from "@/components/empty-state";
 import { SectionHeading } from "@/components/section-heading";
+import { useFuseSearch } from "@/hooks/use-fuse-search";
 import { TOPICS, CATEGORIES } from "@/lib/constants";
 import { getAllSources } from "@/lib/data-sources";
 import type { Source, SourceKind } from "@/lib/types";
@@ -31,21 +34,21 @@ export function LibraryPageClient() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedKinds, setSelectedKinds] = useState<string[]>([]);
   const [sort, setSort] = useState<SortOption>("recommended");
+  const [sourcesShown, setSourcesShown] = useState(18);
+
+  const SOURCES_PAGE_SIZE = 18;
 
   const allSources = useMemo(() => getAllSources(), []);
 
-  const filteredSources = useMemo(() => {
-    let result = allSources;
+  // Fuzzy search via Fuse.js (returns all sources when search is empty)
+  const searchedSources = useFuseSearch(
+    allSources,
+    ["name", "description", "topics", "categories"],
+    search
+  );
 
-    // search
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      result = result.filter(
-        (s) =>
-          s.name.toLowerCase().includes(q) ||
-          s.description.toLowerCase().includes(q)
-      );
-    }
+  const filteredSources = useMemo(() => {
+    let result = searchedSources;
 
     // topic filter
     if (selectedTopics.length > 0) {
@@ -86,7 +89,15 @@ export function LibraryPageClient() {
     }
 
     return result;
-  }, [allSources, search, selectedTopics, selectedCategories, selectedKinds, sort]);
+  }, [searchedSources, search, selectedTopics, selectedCategories, selectedKinds, sort]);
+
+  // Reset pagination when filters change
+  const filterKey = `${search}|${selectedTopics.join()}|${selectedCategories.join()}|${selectedKinds.join()}|${sort}`;
+  const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
+  if (filterKey !== prevFilterKey) {
+    setPrevFilterKey(filterKey);
+    setSourcesShown(SOURCES_PAGE_SIZE);
+  }
 
   const toggle = (value: string, setState: React.Dispatch<React.SetStateAction<string[]>>) => {
     setState((prev) =>
@@ -179,11 +190,28 @@ export function LibraryPageClient() {
 
       {/* Grid */}
       {filteredSources.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {filteredSources.map((source) => (
-            <SourceCard key={source.id} source={source} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {filteredSources.slice(0, sourcesShown).map((source) => (
+              <SourceCard key={source.id} source={source} />
+            ))}
+          </div>
+          {sourcesShown < filteredSources.length && (
+            <div className="mt-8 flex justify-center">
+              <Button
+                variant="outline"
+                size="lg"
+                className="gap-2 rounded-xl"
+                onClick={() =>
+                  setSourcesShown((prev) => prev + SOURCES_PAGE_SIZE)
+                }
+              >
+                <ChevronDown className="h-4 w-4" />
+                Show more sources ({filteredSources.length - sourcesShown} remaining)
+              </Button>
+            </div>
+          )}
+        </>
       ) : (
         <EmptyState
           icon="search"

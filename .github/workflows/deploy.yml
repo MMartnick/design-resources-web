@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: ["main"]
+  schedule:
+    # Rebuild every 6 hours to refresh RSS feeds
+    - cron: "0 */6 * * *"
   workflow_dispatch:
 
 permissions:

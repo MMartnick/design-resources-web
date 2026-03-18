@@ -41,6 +41,7 @@ export const sources: Source[] = [
     feedEnabled: true,
     excerptEnabled: true,
     contentAccess: "Free Articles",
+    curatorNote: "Start with the postmortem series — designers at every level break down what went right and wrong on shipped titles. Invaluable for understanding the gap between theory and practice.",
   },
   {
     id: "src-gdc-news",
@@ -64,6 +65,7 @@ export const sources: Source[] = [
     feedEnabled: false,
     excerptEnabled: true,
     contentAccess: "Free Articles",
+    curatorNote: "The Creativity and Game Feel talks are standout free content — search for them in the GDC YouTube archive.",
   },
   {
     id: "src-gmtk",
@@ -89,6 +91,7 @@ export const sources: Source[] = [
     feedEnabled: true,
     excerptEnabled: true,
     contentAccess: "Free Videos",
+    curatorNote: "Watch the Boss Keys series for an exceptional breakdown of Zelda dungeon design, and the Platformer Toolkit interactive episode to understand feel.",
   },
   {
     id: "src-lost-garden",
@@ -160,6 +163,30 @@ export const sources: Source[] = [
     feedEnabled: false,
     excerptEnabled: true,
     contentAccess: "Free Tutorials",
+  },
+  {
+    id: "src-game-design-patterns",
+    slug: "game-programming-patterns",
+    name: "Game Programming Patterns",
+    description:
+      "Robert Nystrom's full book on software architecture patterns for games — available free online with clear examples in multiple languages.",
+    whyFollow:
+      "A rare free book that bridges game design and engineering. Essential reading for anyone writing game systems.",
+    url: "https://gameprogrammingpatterns.com",
+    topics: ["game-design"],
+    categories: ["theory"],
+    sourceKind: "independent",
+    updateFrequency: "low",
+    featured: false,
+    homepageFeedEligible: false,
+    evergreen: true,
+    hasFeed: false,
+    feedType: null,
+    enabled: true,
+    feedEnabled: false,
+    excerptEnabled: false,
+    contentAccess: "Free",
+    curatorNote: "Read the Observer, State, and Component chapters first — they come up constantly in Unity and Unreal codebases.",
   },
 
   // ═══════════════════════════════════════════════════════
@@ -281,6 +308,53 @@ export const sources: Source[] = [
     excerptEnabled: true,
     contentAccess: "Free Tutorials",
   },
+  {
+    id: "src-unity-best-practices",
+    slug: "unity-best-practices",
+    name: "Unity Best Practices",
+    description:
+      "Official Unity documentation on project organization, performance optimization, and coding best practices.",
+    whyFollow:
+      "The official word on how to structure Unity projects. Essential reference when your project scales beyond a prototype.",
+    url: "https://docs.unity3d.com/Manual/BestPracticeGuides.html",
+    topics: ["unity-game-dev"],
+    categories: ["tutorials", "theory"],
+    sourceKind: "official",
+    updateFrequency: "low",
+    featured: false,
+    homepageFeedEligible: false,
+    evergreen: true,
+    hasFeed: false,
+    feedType: null,
+    enabled: true,
+    feedEnabled: false,
+    excerptEnabled: false,
+    contentAccess: "Free Docs",
+  },
+  {
+    id: "src-game-dev-beginner",
+    slug: "game-dev-beginner",
+    name: "Game Dev Beginner",
+    description:
+      "John French's Unity tutorial site with clear, practical guides on common game development problems — input, cameras, UI, and more.",
+    whyFollow:
+      "Excellent for filling knowledge gaps. Each article tackles one specific Unity problem with working code examples.",
+    url: "https://gamedevbeginner.com",
+    topics: ["unity-game-dev"],
+    categories: ["tutorials"],
+    sourceKind: "independent",
+    updateFrequency: "medium",
+    featured: false,
+    homepageFeedEligible: true,
+    evergreen: false,
+    hasFeed: true,
+    feedType: "rss",
+    feedUrl: "https://gamedevbeginner.com/feed/",
+    enabled: true,
+    feedEnabled: true,
+    excerptEnabled: true,
+    contentAccess: "Free Tutorials",
+  },
 
   // ═══════════════════════════════════════════════════════
   // GRAPHIC DESIGN
@@ -307,6 +381,7 @@ export const sources: Source[] = [
     feedEnabled: false,
     excerptEnabled: true,
     contentAccess: "Free Articles",
+    curatorNote: "Their guest columns and studio visit features are the real gems — skip the social media roundups and go straight for the long-form profiles.",
   },
   {
     id: "src-print-magazine",
@@ -574,6 +649,54 @@ export const sources: Source[] = [
     excerptEnabled: true,
     contentAccess: "Free Tutorials",
   },
+  {
+    id: "src-school-of-motion-blog",
+    slug: "school-of-motion-blog",
+    name: "School of Motion Blog",
+    description:
+      "Free articles, career advice, and industry insights from the leading motion design education company — separate from their paid courses.",
+    whyFollow:
+      "Their free blog covers career growth, industry trends, and technique overviews that you won't find elsewhere in the mograph world.",
+    url: "https://www.schoolofmotion.com/blog",
+    topics: ["motion-graphics"],
+    categories: ["news", "theory"],
+    sourceKind: "publication",
+    updateFrequency: "medium",
+    featured: false,
+    homepageFeedEligible: true,
+    evergreen: false,
+    hasFeed: true,
+    feedType: "rss",
+    feedUrl: "https://www.schoolofmotion.com/blog/rss.xml",
+    enabled: true,
+    feedEnabled: true,
+    excerptEnabled: true,
+    contentAccess: "Free Articles",
+  },
+  {
+    id: "src-lottiefiles-blog",
+    slug: "lottiefiles-blog",
+    name: "LottieFiles Blog",
+    description:
+      "Articles on Lottie animations, motion for product design, and emerging techniques for lightweight web and app animations.",
+    whyFollow:
+      "LottieFiles is where motion meets product design. Their blog covers practical animation for real-world UI.",
+    url: "https://lottiefiles.com/blog",
+    topics: ["motion-graphics", "ui-ux-design"],
+    categories: ["tutorials", "news"],
+    sourceKind: "community",
+    updateFrequency: "medium",
+    featured: false,
+    homepageFeedEligible: true,
+    evergreen: false,
+    hasFeed: true,
+    feedType: "rss",
+    feedUrl: "https://lottiefiles.com/blog/rss.xml",
+    enabled: true,
+    feedEnabled: true,
+    excerptEnabled: true,
+    contentAccess: "Free Articles",
+  },
 
   // ═══════════════════════════════════════════════════════
   // PUBLICATION DESIGN
@@ -625,6 +748,29 @@ export const sources: Source[] = [
     excerptEnabled: true,
     contentAccess: "Free Articles",
   },
+  {
+    id: "src-fonts-in-use",
+    slug: "fonts-in-use",
+    name: "Fonts In Use",
+    description:
+      "A searchable archive of typography in real-world published work — books, magazines, posters, packaging, and more.",
+    whyFollow:
+      "The best resource for seeing how typefaces actually perform in context. Invaluable for editorial and publication designers.",
+    url: "https://fontsinuse.com",
+    topics: ["publication-design", "graphic-design"],
+    categories: ["theory"],
+    sourceKind: "community",
+    updateFrequency: "medium",
+    featured: false,
+    homepageFeedEligible: false,
+    evergreen: true,
+    hasFeed: false,
+    feedType: null,
+    enabled: true,
+    feedEnabled: false,
+    excerptEnabled: false,
+    contentAccess: "Free",
+  },
 
   // ═══════════════════════════════════════════════════════
   // UI/UX DESIGN
@@ -652,6 +798,7 @@ export const sources: Source[] = [
     feedEnabled: true,
     excerptEnabled: true,
     contentAccess: "Free Articles",
+    curatorNote: "Their article archive is massive — start with the top 10 usability heuristics page and branch out from there. The video summaries are great for quick reference.",
   },
   {
     id: "src-nng-reports",

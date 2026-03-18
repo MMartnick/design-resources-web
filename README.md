@@ -209,23 +209,23 @@ Or connect the repo to [vercel.com](https://vercel.com) for automatic deployment
 ### Short term
 - [x] ~~Wire up live RSS adapter with `rss-parser`~~ ✅
 - [x] ~~File-based build cache for cross-worker feed deduplication~~ ✅
-- [ ] Add scheduled rebuilds via GitHub Actions cron (daily/hourly)
-- [ ] Add more sources to each topic area
-- [ ] Implement server-side search with a lightweight search index
+- [x] ~~Add scheduled rebuilds via GitHub Actions cron (every 6 hours)~~ ✅
+- [x] ~~Add more sources to each topic area~~ ✅ (39 sources across 7 topics)
+- [x] ~~Client-side fuzzy search with Fuse.js~~ ✅
 
 ### Medium term
-- [ ] Migrate data layer to Supabase or SQLite/Prisma
-- [ ] Add API routes for feed ingestion (cron-triggered)
-- [ ] Add pagination / infinite scroll for large result sets
-- [ ] Add newsletter signup with a mail provider
-- [ ] Add source suggestion form
+- [ ] Migrate data layer to Supabase or SQLite/Prisma *(requires server deployment)*
+- [ ] Add API routes for feed ingestion *(requires server deployment)*
+- [x] ~~Add pagination / load more for large result sets~~ ✅
+- [ ] Add newsletter signup with a mail provider *(requires server + mail provider)*
+- [x] ~~Add source suggestion form~~ ✅ (mailto link on About page)
 
 ### Long term
-- [ ] Full-text search with relevance scoring
-- [ ] User accounts with cloud-synced saved sources
-- [ ] Editorial notes / curator annotations on sources
-- [ ] Weekly digest email generation
-- [ ] Analytics dashboard for source engagement
+- [ ] Full-text search with relevance scoring *(current Fuse.js approach covers most use cases)*
+- [ ] User accounts with cloud-synced saved sources *(requires backend)*
+- [x] ~~Editorial notes / curator annotations on sources~~ ✅
+- [ ] Weekly digest email generation *(requires server + mail provider)*
+- [ ] Analytics dashboard for source engagement *(requires server + database)*
 
 ---
 
