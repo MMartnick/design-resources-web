@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { ArrowUpRight, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { TimeAgo } from "@/components/time-ago";
 import { cn } from "@/lib/utils";
 import type { FeedItem } from "@/lib/types";
 import { getSourceById } from "@/lib/data";
-import { formatDistanceToNow } from "@/lib/format";
 import { TOPIC_MAP } from "@/lib/constants";
 
 interface FeedItemCardProps {
@@ -38,7 +38,7 @@ export function FeedItemCard({ item, className, compact }: FeedItemCardProps) {
         <span className="text-border">·</span>
         <span className="inline-flex items-center gap-1">
           <Clock className="h-3 w-3" />
-          {formatDistanceToNow(item.publishedAt)}
+          <TimeAgo date={item.publishedAt} />
         </span>
       </div>
 

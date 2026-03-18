@@ -91,7 +91,7 @@ export function SiteFooter() {
         <Separator className="my-8" />
 
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-muted-foreground" suppressHydrationWarning>
             &copy; {new Date().getFullYear()} {SITE_NAME}. A research and
             discovery tool — all content belongs to its respective sources.
           </p>

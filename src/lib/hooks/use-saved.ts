@@ -1,17 +1,31 @@
 "use client";
 
-import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
 const STORAGE_KEY = "designcurrent-saved";
 
+/** Stable empty array — reused on server and when localStorage is empty. */
+const EMPTY: string[] = [];
+
+/** Cache the last parsed value so getSnapshot returns a stable reference. */
+let cachedRaw: string | null = null;
+let cachedParsed: string[] = EMPTY;
+
 function getSnapshot(): string[] {
-  if (typeof window === "undefined") return [];
+  if (typeof window === "undefined") return EMPTY;
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
+    if (raw === cachedRaw) return cachedParsed;
+    cachedRaw = raw;
+    cachedParsed = raw ? JSON.parse(raw) : EMPTY;
+    return cachedParsed;
   } catch {
-    return [];
+    return EMPTY;
   }
+}
+
+function getServerSnapshot(): string[] {
+  return EMPTY;
 }
 
 function subscribe(callback: () => void) {
@@ -30,7 +44,7 @@ function saveTo(ids: string[]) {
 }
 
 export function useSaved(sourceId?: string) {
-  const savedIds = useSyncExternalStore(subscribe, getSnapshot, () => []);
+  const savedIds = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const isSaved = sourceId ? savedIds.includes(sourceId) : false;
 
