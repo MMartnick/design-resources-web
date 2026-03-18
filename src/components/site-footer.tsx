@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Compass } from "lucide-react";
-import { SITE_NAME, TOPICS, CATEGORIES } from "@/lib/constants";
+import { SITE_NAME, SITE_DISCLAIMER, SITE_CONTACT_EMAIL, TOPICS, CATEGORIES } from "@/lib/constants";
 import { Separator } from "@/components/ui/separator";
 
 export function SiteFooter() {
@@ -17,8 +17,9 @@ export function SiteFooter() {
               </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              A curated resource homebase for creative professionals and
-              lifelong learners.
+              A personal, non-commercial resource library for studying game dev,
+              design, motion, publishing, and UX. All links point to the original
+              publishers.
             </p>
           </div>
 
@@ -81,7 +82,7 @@ export function SiteFooter() {
                   href="/about"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  About
+                  About &amp; Rights
                 </Link>
               </li>
             </ul>
@@ -90,13 +91,24 @@ export function SiteFooter() {
 
         <Separator className="my-8" />
 
-        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+        {/* Disclaimer */}
+        <p className="text-xs text-muted-foreground/70 leading-relaxed max-w-3xl">
+          {SITE_DISCLAIMER}
+        </p>
+
+        <div className="mt-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <p className="text-xs text-muted-foreground" suppressHydrationWarning>
-            &copy; {new Date().getFullYear()} {SITE_NAME}. A research and
-            discovery tool — all content belongs to its respective sources.
+            &copy; {new Date().getFullYear()} {SITE_NAME}. A personal,
+            non-commercial project — not affiliated with any listed source.
           </p>
           <p className="text-xs text-muted-foreground">
-            Built with Next.js, Tailwind CSS &amp; shadcn/ui
+            Removal requests:{" "}
+            <a
+              href={`mailto:${SITE_CONTACT_EMAIL}`}
+              className="underline hover:text-foreground transition-colors"
+            >
+              {SITE_CONTACT_EMAIL}
+            </a>
           </p>
         </div>
       </div>

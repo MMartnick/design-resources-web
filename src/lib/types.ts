@@ -21,6 +21,15 @@ export type UpdateFrequency = "high" | "medium" | "low";
 
 export type FeedType = "rss" | "atom" | "custom" | "manual" | null;
 
+/** Badge indicating what kind of free access a source provides */
+export type ContentAccessLabel =
+  | "Free"
+  | "Free Articles"
+  | "Free Docs"
+  | "Free Videos"
+  | "Free Tutorials"
+  | "Free Reports";
+
 // ─── Topic ─────────────────────────────────────────────────────────────────────
 
 export interface Topic {
@@ -47,6 +56,7 @@ export interface Source {
   slug: string;
   name: string;
   description: string;
+  /** Curator's personal note on why this source matters */
   whyFollow: string;
   url: string;
   topics: TopicSlug[];
@@ -59,7 +69,12 @@ export interface Source {
   hasFeed: boolean;
   feedType: FeedType;
   feedUrl?: string;
-  imageUrl?: string;
+  /** Per-source visibility controls */
+  enabled: boolean;
+  feedEnabled: boolean;
+  excerptEnabled: boolean;
+  /** Free-access label shown on the source card */
+  contentAccess: ContentAccessLabel;
 }
 
 // ─── Feed Item ─────────────────────────────────────────────────────────────────
@@ -69,9 +84,9 @@ export interface FeedItem {
   sourceId: string;
   title: string;
   url: string;
+  /** Very short excerpt — discovery purposes only */
   summary: string;
   publishedAt: string; // ISO date string
-  imageUrl?: string;
   topics: TopicSlug[];
   categories: CategorySlug[];
   isFeatured: boolean;

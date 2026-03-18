@@ -18,11 +18,11 @@ export function EvergreenShelf({ sources, className }: EvergreenShelfProps) {
       <div className="mb-6 flex items-center gap-2">
         <BookMarked className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
         <h2 className="text-xl font-bold tracking-tight">
-          Evergreen Theory Shelf
+          Evergreen Free Theory Shelf
         </h2>
       </div>
       <p className="mb-6 max-w-2xl text-sm text-muted-foreground">
-        Foundational resources that remain valuable regardless of when you discover them. Bookmark these and revisit often.
+        Foundational free resources that stay valuable regardless of when you find them. All content hosted by the original publishers.
       </p>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {sources.map((source) => (

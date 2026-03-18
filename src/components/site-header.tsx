@@ -44,7 +44,10 @@ export function SiteHeader() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
           <Compass className="h-5 w-5 text-primary transition-transform group-hover:rotate-45" />
-          <span className="text-lg font-bold tracking-tight">{SITE_NAME}</span>
+          <div className="flex flex-col">
+            <span className="text-lg font-bold tracking-tight leading-none">{SITE_NAME}</span>
+            <span className="text-[10px] text-muted-foreground leading-tight hidden sm:block">A personal resource library</span>
+          </div>
         </Link>
 
         {/* Desktop nav */}

@@ -58,7 +58,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <section className="mb-12">
           <SectionHeading
             title="Latest Articles"
-            subtitle={`Recent ${category.name.toLowerCase()} from across all topics.`}
+            subtitle={`Recent ${category.name.toLowerCase()} headlines — click through to read at the publisher's site.`}
           />
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {feedItems.slice(0, 9).map((item) => (
@@ -72,7 +72,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <section>
         <SectionHeading
           title={`${category.name} Sources`}
-          subtitle={`All sources that publish ${category.name.toLowerCase()} content.`}
+          subtitle={`Free sources that publish ${category.name.toLowerCase()} content.`}
         >
           <Link href="/library">
             <Button variant="ghost" size="sm" className="gap-1 text-sm">

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowUpRight, ExternalLink, CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { FeedItemCard } from "@/components/feed-item-card";
@@ -73,9 +73,17 @@ export default async function SourcePage({ params }: SourcePageProps) {
               {source.description}
             </p>
 
+            {/* Free access badge */}
+            <div className="mt-4">
+              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                {source.contentAccess}
+              </span>
+            </div>
+
             <div className="mt-4 p-4 rounded-xl bg-muted/50 border border-border/50">
               <p className="text-sm font-medium text-foreground mb-1">
-                Why follow this?
+                Why I follow this
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground">
                 {source.whyFollow}
@@ -109,7 +117,7 @@ export default async function SourcePage({ params }: SourcePageProps) {
               >
                 <Button className="gap-2 rounded-xl">
                   <ExternalLink className="h-4 w-4" />
-                  Visit Source
+                  Visit original source
                 </Button>
               </a>
             </div>
@@ -120,7 +128,7 @@ export default async function SourcePage({ params }: SourcePageProps) {
             <section>
               <SectionHeading
                 title="Latest from This Source"
-                subtitle="Recent content pulled from the feed."
+                subtitle="Recent headlines — click through to read at the publisher's site."
               />
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                 {feedItems.map((item) => (

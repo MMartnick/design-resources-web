@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Star } from "lucide-react";
+import { ArrowUpRight, ExternalLink, CheckCircle2, BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { Source } from "@/lib/types";
@@ -19,10 +19,14 @@ export function FeaturedSourceCard({ source, className }: FeaturedSourceCardProp
         className
       )}
     >
-      <div className="mb-3 flex items-center gap-2">
-        <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
-        <span className="text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-          Featured
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <BookOpen className="h-3.5 w-3.5" />
+          Recommended
+        </span>
+        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-400">
+          <CheckCircle2 className="h-3 w-3" />
+          {source.contentAccess}
         </span>
       </div>
 
@@ -57,7 +61,7 @@ export function FeaturedSourceCard({ source, className }: FeaturedSourceCardProp
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
-          Visit <ArrowUpRight className="h-3.5 w-3.5" />
+          Visit source <ExternalLink className="h-3.5 w-3.5" />
         </a>
       </div>
     </article>

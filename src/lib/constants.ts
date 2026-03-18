@@ -2,9 +2,12 @@ import type { Topic, Category } from "./types";
 
 export const SITE_NAME = "Designcurrent";
 export const SITE_TAGLINE =
-  "An editorially curated resource homebase for game dev, design, motion, publishing, and UX.";
+  "A personal curated library of free resources for game dev, design, motion, publishing, and UX.";
 export const SITE_DESCRIPTION =
-  "Track the newest thinking, revisit the fundamentals, and keep your best sources in one place.";
+  "Track new ideas, revisit fundamentals, and keep your best free sources in one place. Built for study, research, and creative practice.";
+export const SITE_DISCLAIMER =
+  "All external content remains the property of its original publishers. This site provides links, metadata, and limited excerpts for personal discovery purposes only.";
+export const SITE_CONTACT_EMAIL = "designcurrent@proton.me";
 
 export const TOPICS: Topic[] = [
   {

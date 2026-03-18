@@ -6,69 +6,24 @@
  * (with seed-data fallback for sources whose feeds fail).
  */
 
-import { sources } from "@/data/sources";
 import { loadFeedItems } from "@/lib/feed/loader";
-import type {
-  Source,
-  FeedItem,
-  TopicSlug,
-  CategorySlug,
-} from "@/lib/types";
+import { searchSources } from "@/lib/data-sources";
+import type { FeedItem, TopicSlug, CategorySlug } from "@/lib/types";
 
-// ─── Sources ───────────────────────────────────────────────────────────────────
-
-export function getAllSources(): Source[] {
-  return sources;
-}
-
-export function getSourceBySlug(slug: string): Source | undefined {
-  return sources.find((s) => s.slug === slug);
-}
-
-export function getSourceById(id: string): Source | undefined {
-  return sources.find((s) => s.id === id);
-}
-
-export function getSourcesByTopic(topic: TopicSlug): Source[] {
-  return sources.filter((s) => s.topics.includes(topic));
-}
-
-export function getSourcesByCategory(category: CategorySlug): Source[] {
-  return sources.filter((s) => s.categories.includes(category));
-}
-
-export function getFeaturedSources(): Source[] {
-  return sources.filter((s) => s.featured);
-}
-
-export function getEvergreenSources(): Source[] {
-  return sources.filter((s) => s.evergreen);
-}
-
-export function getHomepageFeedSources(): Source[] {
-  return sources.filter((s) => s.homepageFeedEligible);
-}
-
-export function searchSources(query: string): Source[] {
-  const q = query.toLowerCase();
-  return sources.filter(
-    (s) =>
-      s.name.toLowerCase().includes(q) ||
-      s.description.toLowerCase().includes(q) ||
-      s.topics.some((t) => t.includes(q)) ||
-      s.categories.some((c) => c.includes(q))
-  );
-}
-
-export function getRelatedSources(source: Source, limit = 5): Source[] {
-  return sources
-    .filter(
-      (s) =>
-        s.id !== source.id &&
-        s.topics.some((t) => source.topics.includes(t))
-    )
-    .slice(0, limit);
-}
+// Re-export all synchronous source functions (client-safe)
+export {
+  getAllSources,
+  getSourceBySlug,
+  getSourceById,
+  getSourcesByTopic,
+  getSourcesByCategory,
+  getFeaturedSources,
+  getEvergreenSources,
+  getHomepageFeedSources,
+  getFeedEnabledSources,
+  searchSources,
+  getRelatedSources,
+} from "@/lib/data-sources";
 
 // ─── Feed Items (async — loaded from live RSS at build time) ───────────────────
 

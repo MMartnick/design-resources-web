@@ -7,7 +7,7 @@
 
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
-import { sources } from "@/data/sources";
+import { getFeedEnabledSources, getAllSources } from "@/lib/data-sources";
 import { feedItems as seedFeedItems } from "@/data/feed-items";
 import { fetchAllFeeds } from "@/lib/feed/rss-fetcher";
 import type { FeedItem } from "@/lib/types";
@@ -26,7 +26,7 @@ let memoryCache: FeedItem[] | null = null;
  * Fetch live feeds, merge with seed fallback, deduplicate, and return.
  */
 async function fetchAndMerge(): Promise<FeedItem[]> {
-  const feedSources = sources.filter((s) => s.hasFeed && s.feedUrl);
+  const feedSources = getFeedEnabledSources();
 
   const { items: liveItems, results } = await fetchAllFeeds(feedSources, {
     maxItemsPerSource: 8,

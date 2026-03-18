@@ -7,6 +7,10 @@
  *
  * Called at build time only (inside generateStaticParams / page server
  * components). No runtime server is required.
+ *
+ * Content policy: we keep only metadata (title, link, date) and a very
+ * short excerpt for discovery. Full content lives on the publisher's site.
+ * No images are extracted or stored.
  */
 
 import RSSParser from "rss-parser";
@@ -19,14 +23,6 @@ const parser = new RSSParser({
   headers: {
     "User-Agent": "Designcurrent/1.0 (+https://github.com/mmartnick/design-resources-web)",
     Accept: "application/rss+xml, application/atom+xml, application/xml, text/xml",
-  },
-  // Parse common custom fields
-  customFields: {
-    item: [
-      ["media:content", "mediaContent", { keepArray: false }],
-      ["media:thumbnail", "mediaThumbnail", { keepArray: false }],
-      ["enclosure", "enclosure", { keepArray: false }],
-    ],
   },
 });
 
@@ -64,27 +60,6 @@ function truncate(str: string, max: number): string {
   return (lastSpace > max * 0.6 ? truncated.slice(0, lastSpace) : truncated) + "…";
 }
 
-/** Try to extract an image URL from an RSS item */
-function extractImageUrl(item: Record<string, unknown>): string | undefined {
-  // media:content (may be { url } or { $: { url } })
-  const mc = item.mediaContent as Record<string, unknown> | undefined;
-  if (typeof mc?.url === "string") return mc.url;
-  const mc$ = mc?.$ as Record<string, string> | undefined;
-  if (mc$?.url) return mc$.url;
-
-  // media:thumbnail
-  const mt = item.mediaThumbnail as Record<string, unknown> | undefined;
-  if (typeof mt?.url === "string") return mt.url;
-  const mt$ = mt?.$ as Record<string, string> | undefined;
-  if (mt$?.url) return mt$.url;
-
-  // enclosure
-  const enc = item.enclosure as Record<string, string> | undefined;
-  if (enc?.url && enc?.type?.startsWith("image")) return enc.url;
-
-  return undefined;
-}
-
 // ─── Public API ────────────────────────────────────────────────────────────────
 
 export interface FetchResult {
@@ -116,12 +91,15 @@ export async function fetchSourceFeed(
           entry.contentSnippet ??
           entry.summary ??
           (typeof entry.content === "string" ? stripHtml(entry.content) : "");
-        const summary = truncate(stripHtml(rawSummary), 300);
+        // Short excerpt only — full content lives on the publisher's site.
+        // If the source disables excerpts, store an empty summary.
+        const summary = source.excerptEnabled
+          ? truncate(stripHtml(rawSummary), 160)
+          : "";
         const publishedAt =
           entry.isoDate ??
           entry.pubDate ??
           new Date().toISOString();
-        const imageUrl = extractImageUrl(entry as unknown as Record<string, unknown>);
 
         return {
           id: `fi-${source.id}-${simpleHash(link || title)}`,
@@ -131,7 +109,6 @@ export async function fetchSourceFeed(
           summary,
           publishedAt:
             new Date(publishedAt).toISOString(), // normalise
-          imageUrl,
           topics: source.topics as TopicSlug[],
           categories: source.categories as CategorySlug[],
           isFeatured: false,

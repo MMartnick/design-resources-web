@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { SourceCard } from "@/components/source-card";
 import { EmptyState } from "@/components/empty-state";
 import { useSaved } from "@/lib/hooks/use-saved";
-import { getSourceById } from "@/lib/data";
+import { getSourceById } from "@/lib/data-sources";
 
 export function SavedPageClient() {
   const { savedIds } = useSaved();

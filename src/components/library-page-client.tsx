@@ -7,7 +7,7 @@ import { SourceCard } from "@/components/source-card";
 import { EmptyState } from "@/components/empty-state";
 import { SectionHeading } from "@/components/section-heading";
 import { TOPICS, CATEGORIES } from "@/lib/constants";
-import { getAllSources } from "@/lib/data";
+import { getAllSources } from "@/lib/data-sources";
 import type { Source, SourceKind } from "@/lib/types";
 
 type SortOption = "recommended" | "newest" | "alphabetical";
@@ -104,8 +104,8 @@ export function LibraryPageClient() {
           Source Library
         </h1>
         <p className="mt-2 text-base text-muted-foreground max-w-2xl">
-          Every source in our network, filterable by topic, category, and type.
-          Find exactly what you need.
+          Every free source in the collection, filterable by topic, category, and type.
+          All links point to the original publishers.
         </p>
       </div>
 

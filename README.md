@@ -23,7 +23,8 @@ This is **not** a bookmark manager. It's a research tool for creative profession
 | Icons | Lucide React |
 | Validation | Zod |
 | Theming | next-themes (dark mode) |
-| Data | Local seed data (designed for database migration) |
+| Data | Live RSS feeds at build time + seed fallback |
+| Feed Parsing | rss-parser |
 
 ## Getting Started
 
@@ -50,7 +51,7 @@ The dev server runs at [http://localhost:3000](http://localhost:3000).
 ```
 src/
 ├── app/                          # Next.js App Router pages
-│   ├── page.tsx                  # Homepage
+│   ├── page.tsx                  # Homepage (async server component)
 │   ├── layout.tsx                # Root layout (header, footer, theme)
 │   ├── about/page.tsx            # About page
 │   ├── library/page.tsx          # Filterable source library
@@ -62,7 +63,7 @@ src/
 │   └── source/[slug]/page.tsx    # Source detail pages
 ├── components/                   # Shared UI components
 │   ├── ui/                       # shadcn/ui primitives
-│   ├── site-header.tsx           # Global header + mobile nav
+│   ├── site-header.tsx           # Global header + inline mobile nav
 │   ├── site-footer.tsx           # Global footer
 │   ├── source-card.tsx           # Source display card
 │   ├── feed-item-card.tsx        # Article/feed item card
@@ -74,6 +75,7 @@ src/
 │   ├── section-heading.tsx       # Section heading component
 │   ├── empty-state.tsx           # Empty state component
 │   ├── save-button.tsx           # Bookmark/save button
+│   ├── time-ago.tsx              # Client-side relative time display
 │   ├── theme-provider.tsx        # Dark mode provider
 │   ├── theme-toggle.tsx          # Dark/light toggle
 │   ├── home-page-client.tsx      # Homepage client component
@@ -81,12 +83,13 @@ src/
 │   └── saved-page-client.tsx     # Saved page client component
 ├── data/                         # Seed data
 │   ├── sources.ts                # Source manifest (35 sources)
-│   └── feed-items.ts             # Mocked feed items (25+ articles)
+│   └── feed-items.ts             # Seed feed items (fallback data)
 └── lib/                          # Shared logic
     ├── types.ts                  # TypeScript types
     ├── schemas.ts                # Zod validation schemas
     ├── constants.ts              # Topics, categories, site config
-    ├── data.ts                   # Data access layer (queries)
+    ├── data.ts                   # Data access layer (async feed queries)
+    ├── data-sources.ts           # Source queries (sync, client-safe)
     ├── utils.ts                  # Utility functions (cn, etc.)
     ├── icons.ts                  # Icon mapping
     ├── format.ts                 # Date formatting
@@ -94,8 +97,10 @@ src/
     ├── hooks/
     │   └── use-saved.ts          # localStorage save/bookmark hook
     └── feed/
-        ├── index.ts              # Feed adapter exports
-        └── adapters.ts           # Feed ingestion adapters
+        ├── index.ts              # Feed module exports
+        ├── adapters.ts           # Feed ingestion adapters
+        ├── rss-fetcher.ts        # Live RSS/Atom feed parser
+        └── loader.ts             # File-cached build-time loader
 ```
 
 ### Data Model
@@ -119,24 +124,21 @@ The data access layer (`src/lib/data.ts`) provides query functions over the seed
 
 ### Feed Ingestion Architecture
 
-The feed adapter system lives in `src/lib/feed/`:
+The feed system lives in `src/lib/feed/` and fetches **live RSS/Atom feeds at build time**:
 
 ```
-FeedAdapter (interface)
-├── RSSAdapter      — handles RSS/Atom feeds
-├── CustomAdapter   — handles source-specific APIs
-└── ManualAdapter   — handles static/curated content
+rss-fetcher.ts   — Parses RSS/Atom via rss-parser with 15s timeout, image extraction, HTML stripping
+loader.ts        — File-cached loader: fetches once, shares data across all 23+ build workers
+adapters.ts      — Adapter pattern (RSSAdapter, CustomAdapter, ManualAdapter)
 ```
 
-**For MVP**: All adapters return mocked data from `src/data/feed-items.ts`.
+**How it works**:
+1. At build time, `loader.ts` fetches all feed-enabled sources in parallel (6 concurrent)
+2. Results are written to `.next/cache/feed/feed-items.json` — subsequent workers read from cache
+3. Failed sources fall back to seed data from `src/data/feed-items.ts`
+4. All feed items are deduplicated by URL and sorted by publish date
 
-**To wire up live feeds**:
-1. Implement the `fetch()` method in each adapter
-2. Add an RSS parser (e.g., `rss-parser` or custom XML parsing)
-3. Call `ingestAll()` or `ingestSource()` on a schedule
-4. Store results in a database (Supabase, SQLite/Prisma, etc.)
-
-The adapter registry maps feed types to adapter instances, so adding new adapter types is a one-line registration.
+**Current status**: 13/15 feed-enabled sources return live data. ~100 live items per build.
 
 ### Homepage Feed Strategy
 
@@ -168,7 +170,21 @@ Evergreen resources (NN/g, Laws of UX, GDC Vault, etc.) are surfaced in a dedica
 
 ## Deployment
 
-### Vercel (recommended)
+### GitHub Pages (current)
+
+The site is deployed as a static export to GitHub Pages via GitHub Actions.
+
+Live at: **https://mmartnick.github.io/design-resources-web/**
+
+```bash
+# Build static export
+npm run build
+# Output is in the `out/` directory
+```
+
+The GitHub Actions workflow (`.github/workflows/nextjs.yml`) builds and deploys on every push to `main`.
+
+### Vercel
 
 ```bash
 # Install Vercel CLI
@@ -179,15 +195,6 @@ vercel
 ```
 
 Or connect the repo to [vercel.com](https://vercel.com) for automatic deployments.
-
-### Self-hosted
-
-```bash
-npm run build
-npm start
-```
-
-The app runs as a standard Node.js server. All pages are statically generated at build time with ISR support.
 
 ## Design Decisions
 
@@ -200,8 +207,9 @@ The app runs as a standard Node.js server. All pages are statically generated at
 ## Next Steps
 
 ### Short term
-- [ ] Wire up live RSS adapter with `rss-parser`
-- [ ] Add scheduled revalidation for feed items (`revalidate` in route segments)
+- [x] ~~Wire up live RSS adapter with `rss-parser`~~ ✅
+- [x] ~~File-based build cache for cross-worker feed deduplication~~ ✅
+- [ ] Add scheduled rebuilds via GitHub Actions cron (daily/hourly)
 - [ ] Add more sources to each topic area
 - [ ] Implement server-side search with a lightweight search index
 

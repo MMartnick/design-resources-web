@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { ArrowUpRight, Clock } from "lucide-react";
+import { ArrowUpRight, Clock, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { TimeAgo } from "@/components/time-ago";
 import { cn } from "@/lib/utils";
 import type { FeedItem } from "@/lib/types";
-import { getSourceById } from "@/lib/data";
+import { getSourceById } from "@/lib/data-sources";
 import { TOPIC_MAP } from "@/lib/constants";
 
 interface FeedItemCardProps {
@@ -25,7 +25,7 @@ export function FeedItemCard({ item, className, compact }: FeedItemCardProps) {
         className
       )}
     >
-      {/* Source + time */}
+      {/* Source attribution + time */}
       <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
         {source && (
           <Link
@@ -42,7 +42,7 @@ export function FeedItemCard({ item, className, compact }: FeedItemCardProps) {
         </span>
       </div>
 
-      {/* Title */}
+      {/* Title — links to original publisher */}
       <a
         href={item.url}
         target="_blank"
@@ -59,14 +59,14 @@ export function FeedItemCard({ item, className, compact }: FeedItemCardProps) {
         </h3>
       </a>
 
-      {/* Summary */}
-      {!compact && (
+      {/* Short excerpt (discovery only) */}
+      {!compact && item.summary && (
         <p className="mb-3 text-sm leading-relaxed text-muted-foreground line-clamp-2">
           {item.summary}
         </p>
       )}
 
-      {/* Tags + link */}
+      {/* Tags + outbound link */}
       <div className="mt-auto flex items-center justify-between gap-2">
         <div className="flex flex-wrap gap-1">
           {item.topics.slice(0, 2).map((t) => (
@@ -84,9 +84,9 @@ export function FeedItemCard({ item, className, compact }: FeedItemCardProps) {
           href={item.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="shrink-0 inline-flex items-center gap-1 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity"
+          className="shrink-0 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline transition-opacity"
         >
-          Read <ArrowUpRight className="h-3 w-3" />
+          Read at source <ExternalLink className="h-3 w-3" />
         </a>
       </div>
     </article>

@@ -76,7 +76,7 @@ export default async function TopicPage({ params }: TopicPageProps) {
         <section className="mb-12">
           <SectionHeading
             title="Recommended Sources"
-            subtitle="The essential resources for this topic."
+            subtitle="Free resources I find most useful for this topic."
           />
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {featuredSources.map((source) => (
@@ -91,7 +91,7 @@ export default async function TopicPage({ params }: TopicPageProps) {
         <section className="mb-12">
           <SectionHeading
             title="Latest Articles"
-            subtitle="Recent content from sources in this topic."
+            subtitle="Recent headlines — click through to read at the publisher's site."
           />
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {feedItems.slice(0, 6).map((item) => (

@@ -25,6 +25,15 @@ export const FeedTypeSchema = z
   .enum(["rss", "atom", "custom", "manual"])
   .nullable();
 
+export const ContentAccessLabelSchema = z.enum([
+  "Free",
+  "Free Articles",
+  "Free Docs",
+  "Free Videos",
+  "Free Tutorials",
+  "Free Reports",
+]);
+
 export const SourceSchema = z.object({
   id: z.string(),
   slug: z.string(),
@@ -42,7 +51,10 @@ export const SourceSchema = z.object({
   hasFeed: z.boolean(),
   feedType: FeedTypeSchema,
   feedUrl: z.string().url().optional(),
-  imageUrl: z.string().optional(),
+  enabled: z.boolean(),
+  feedEnabled: z.boolean(),
+  excerptEnabled: z.boolean(),
+  contentAccess: ContentAccessLabelSchema,
 });
 
 export const FeedItemSchema = z.object({
@@ -52,7 +64,6 @@ export const FeedItemSchema = z.object({
   url: z.string().url(),
   summary: z.string(),
   publishedAt: z.string(),
-  imageUrl: z.string().optional(),
   topics: z.array(TopicSlugSchema).min(1),
   categories: z.array(CategorySlugSchema).min(1),
   isFeatured: z.boolean(),

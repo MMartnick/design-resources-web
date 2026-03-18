@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink, ArrowUpRight, Signal, Bookmark } from "lucide-react";
+import { ExternalLink, ArrowUpRight, Signal, Bookmark, CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { Source } from "@/lib/types";
@@ -41,6 +41,14 @@ export function SourceCard({ source, className }: SourceCardProps) {
           </h3>
         </Link>
         <SaveButton sourceId={source.id} />
+      </div>
+
+      {/* Free access badge */}
+      <div className="mb-2">
+        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
+          <CheckCircle2 className="h-3 w-3" />
+          {source.contentAccess}
+        </span>
       </div>
 
       {/* Description */}
@@ -88,7 +96,7 @@ export function SourceCard({ source, className }: SourceCardProps) {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
         >
-          Visit <ArrowUpRight className="h-3 w-3" />
+          Visit source <ExternalLink className="h-3 w-3" />
         </a>
       </div>
     </article>

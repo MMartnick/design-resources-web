@@ -16,6 +16,7 @@ import {
   SITE_NAME,
   SITE_TAGLINE,
   SITE_DESCRIPTION,
+  SITE_DISCLAIMER,
   TOPICS,
   CATEGORIES,
 } from "@/lib/constants";
@@ -126,6 +127,9 @@ export function HomePageClient({
             <p className="mt-2 text-base text-muted-foreground/80">
               {SITE_DESCRIPTION}
             </p>
+            <p className="mt-3 text-xs text-muted-foreground/60">
+              All free resources. No paywalled content. Links go to the original publisher.
+            </p>
           </div>
 
           {/* Search */}
@@ -191,8 +195,8 @@ export function HomePageClient({
           {/* Latest Feed */}
           <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
             <SectionHeading
-              title="Latest Across the Network"
-              subtitle="Freshly published from our curated source network."
+              title="Latest from the Sources"
+              subtitle="Recently published — links go to the original publishers."
             >
               <Link href="/library">
                 <Button variant="ghost" size="sm" className="gap-1 text-sm">
@@ -233,8 +237,8 @@ export function HomePageClient({
           {/* Featured Sources */}
           <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
             <SectionHeading
-              title="Featured Sources"
-              subtitle="Handpicked resources we consider essential for every creative professional."
+              title="Recommended Free Sources"
+              subtitle="Resources I keep coming back to — all freely accessible."
             >
               <Link href="/library">
                 <Button variant="ghost" size="sm" className="gap-1 text-sm">
@@ -254,7 +258,7 @@ export function HomePageClient({
           <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
             <SectionHeading
               title="Browse by Topic"
-              subtitle="Explore curated sources organized by discipline."
+              subtitle="Explore free sources organized by discipline."
             />
 
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
@@ -273,32 +277,12 @@ export function HomePageClient({
             <EvergreenShelf sources={evergreenSources} />
           </section>
 
-          {/* Newsletter placeholder */}
+          {/* Disclaimer */}
           <section className="border-t border-border/30 bg-muted/30">
-            <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-              <div className="mx-auto max-w-lg text-center">
-                <h2 className="text-xl font-bold tracking-tight">
-                  Stay in the current
-                </h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  A periodic digest of the best new resources, articles, and
-                  thinking from across our network. No spam, just signal.
-                </p>
-                <div className="mt-6 flex gap-2 max-w-sm mx-auto">
-                  <input
-                    type="email"
-                    placeholder="your@email.com"
-                    className="flex h-10 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    disabled
-                  />
-                  <Button disabled className="rounded-xl px-6 shrink-0">
-                    Subscribe
-                  </Button>
-                </div>
-                <p className="mt-2 text-xs text-muted-foreground/60">
-                  Coming soon — newsletter functionality is in development.
-                </p>
-              </div>
+            <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+              <p className="mx-auto max-w-2xl text-center text-xs text-muted-foreground/70 leading-relaxed">
+                {SITE_DISCLAIMER}
+              </p>
             </div>
           </section>
         </>
