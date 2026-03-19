@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ArrowUpRight, BookMarked } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -32,12 +31,14 @@ export function EvergreenShelf({ sources, className }: EvergreenShelfProps) {
           >
             <BookMarked className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600/60 dark:text-emerald-400/60" />
             <div className="min-w-0 flex-1">
-              <Link
-                href={`/source/${source.slug}`}
+              <a
+                href={source.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-sm font-semibold text-foreground hover:text-primary transition-colors line-clamp-1"
               >
                 {source.name}
-              </Link>
+              </a>
               <p className="mt-0.5 text-xs text-muted-foreground line-clamp-2">
                 {source.whyFollow}
               </p>

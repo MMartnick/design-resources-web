@@ -9,6 +9,9 @@ import {
   Newspaper,
   GraduationCap,
   Lightbulb,
+  Type,
+  Stamp,
+  PenTool,
   type LucideIcon,
 } from "lucide-react";
 
@@ -23,6 +26,9 @@ const iconMap: Record<string, LucideIcon> = {
   Newspaper,
   GraduationCap,
   Lightbulb,
+  Type,
+  Stamp,
+  PenTool,
 };
 
 export function getIcon(name: string): LucideIcon {

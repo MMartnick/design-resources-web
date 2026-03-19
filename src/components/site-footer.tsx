@@ -7,7 +7,7 @@ export function SiteFooter() {
   return (
     <footer className="mt-auto border-t border-border/50 bg-muted/30">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-3">
@@ -23,34 +23,17 @@ export function SiteFooter() {
             </p>
           </div>
 
-          {/* Topics */}
+          {/* Browse */}
           <div>
-            <h3 className="mb-3 text-sm font-semibold">Topics</h3>
+            <h3 className="mb-3 text-sm font-semibold">Browse</h3>
             <ul className="space-y-2">
-              {TOPICS.map((topic) => (
+              {TOPICS.slice(0, 6).map((topic) => (
                 <li key={topic.slug}>
                   <Link
                     href={`/topic/${topic.slug}`}
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {topic.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Categories */}
-          <div>
-            <h3 className="mb-3 text-sm font-semibold">Categories</h3>
-            <ul className="space-y-2">
-              {CATEGORIES.map((cat) => (
-                <li key={cat.slug}>
-                  <Link
-                    href={`/category/${cat.slug}`}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {cat.name}
                   </Link>
                 </li>
               ))}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink, ArrowUpRight, Signal, Bookmark, CheckCircle2 } from "lucide-react";
+import { ExternalLink, Signal, CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { Source } from "@/lib/types";
@@ -35,11 +35,11 @@ export function SourceCard({ source, className }: SourceCardProps) {
     >
       {/* Top row */}
       <div className="mb-3 flex items-start justify-between gap-3">
-        <Link href={`/source/${source.slug}`} className="group/link min-w-0 flex-1">
+        <a href={source.url} target="_blank" rel="noopener noreferrer" className="group/link min-w-0 flex-1">
           <h3 className="text-base font-semibold leading-snug text-foreground group-hover/link:text-primary transition-colors line-clamp-2">
             {source.name}
           </h3>
-        </Link>
+        </a>
         <SaveButton sourceId={source.id} />
       </div>
 

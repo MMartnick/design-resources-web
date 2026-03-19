@@ -13,7 +13,6 @@ import type { FeedItem, TopicSlug, CategorySlug } from "@/lib/types";
 // Re-export all synchronous source functions (client-safe)
 export {
   getAllSources,
-  getSourceBySlug,
   getSourceById,
   getSourcesByTopic,
   getSourcesByCategory,
@@ -22,7 +21,6 @@ export {
   getHomepageFeedSources,
   getFeedEnabledSources,
   searchSources,
-  getRelatedSources,
 } from "@/lib/data-sources";
 
 // ─── Feed Items (async — loaded from live RSS at build time) ───────────────────

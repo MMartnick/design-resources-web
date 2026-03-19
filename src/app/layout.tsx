@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { CategorySidebar } from "@/components/category-sidebar";
 import { SITE_NAME, SITE_TAGLINE } from "@/lib/constants";
 
 const geistSans = Geist({
@@ -42,7 +43,12 @@ export default function RootLayout({
         >
           <div className="relative flex min-h-screen flex-col">
             <SiteHeader />
-            <main className="flex-1">{children}</main>
+            <div className="flex flex-1">
+              <main className="flex-1 min-w-0">{children}</main>
+              <aside className="hidden lg:block w-[260px] shrink-0 sticky top-16 self-start max-h-[calc(100vh-4rem)] overflow-y-auto border-l border-border/40 bg-background/50">
+                <CategorySidebar />
+              </aside>
+            </div>
             <SiteFooter />
           </div>
         </ThemeProvider>

@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { ArrowUpRight, ExternalLink, CheckCircle2, BookOpen } from "lucide-react";
+import { ExternalLink, CheckCircle2, BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { Source } from "@/lib/types";
@@ -30,11 +29,11 @@ export function FeaturedSourceCard({ source, className }: FeaturedSourceCardProp
         </span>
       </div>
 
-      <Link href={`/source/${source.slug}`}>
+      <a href={source.url} target="_blank" rel="noopener noreferrer">
         <h3 className="mb-2 text-lg font-bold leading-tight text-foreground group-hover:text-primary transition-colors">
           {source.name}
         </h3>
-      </Link>
+      </a>
 
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground line-clamp-3">
         {source.whyFollow}
@@ -48,18 +47,12 @@ export function FeaturedSourceCard({ source, className }: FeaturedSourceCardProp
         ))}
       </div>
 
-      <div className="mt-auto flex items-center gap-3">
-        <Link
-          href={`/source/${source.slug}`}
-          className="text-sm font-medium text-primary hover:underline"
-        >
-          Learn more
-        </Link>
+      <div className="mt-auto">
         <a
           href={source.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
         >
           Visit source <ExternalLink className="h-3.5 w-3.5" />
         </a>

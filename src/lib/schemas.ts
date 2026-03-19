@@ -3,7 +3,9 @@ import { z } from "zod";
 export const TopicSlugSchema = z.enum([
   "game-design",
   "unity-game-dev",
-  "graphic-design",
+  "typography",
+  "branding-identity",
+  "illustration",
   "adobe-creative-cloud",
   "motion-graphics",
   "publication-design",

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Clock, ExternalLink } from "lucide-react";
+import { Clock, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { TimeAgo } from "@/components/time-ago";
 import { cn } from "@/lib/utils";
@@ -28,12 +28,14 @@ export function FeedItemCard({ item, className, compact }: FeedItemCardProps) {
       {/* Source attribution + time */}
       <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
         {source && (
-          <Link
-            href={`/source/${source.slug}`}
+          <a
+            href={source.url}
+            target="_blank"
+            rel="noopener noreferrer"
             className="font-medium text-foreground/70 hover:text-primary transition-colors"
           >
             {source.name}
-          </Link>
+          </a>
         )}
         <span className="text-border">·</span>
         <span className="inline-flex items-center gap-1">

@@ -1,4 +1,4 @@
-import type { Topic, Category } from "./types";
+import type { Topic, Category, TopicGroup } from "./types";
 
 export const SITE_NAME = "Designcurrent";
 export const SITE_TAGLINE =
@@ -27,12 +27,28 @@ export const TOPICS: Topic[] = [
     color: "violet",
   },
   {
-    slug: "graphic-design",
-    name: "Graphic Design",
+    slug: "typography",
+    name: "Typography & Type Design",
     description:
-      "Visual communication at its finest. Typography, branding, layout, illustration, and the creative thinking behind the world's best graphic work.",
-    icon: "Palette",
+      "The art and craft of selecting, setting, and designing type. Explore how letterforms shape communication — from editorial layouts to brand identities.",
+    icon: "Type",
     color: "amber",
+  },
+  {
+    slug: "branding-identity",
+    name: "Branding & Visual Identity",
+    description:
+      "The discipline of building cohesive visual systems — logos, color, identity guidelines, and the strategic thinking behind memorable brands.",
+    icon: "Stamp",
+    color: "pink",
+  },
+  {
+    slug: "illustration",
+    name: "Illustration & Visual Art",
+    description:
+      "From editorial illustration to concept art and visual storytelling. Creative work, artist profiles, and the ideas behind compelling imagery.",
+    icon: "PenTool",
+    color: "fuchsia",
   },
   {
     slug: "adobe-creative-cloud",
@@ -65,6 +81,39 @@ export const TOPICS: Topic[] = [
       "User interface and experience design at every scale. Research methods, interaction patterns, design systems, and the principles that make digital products intuitive.",
     icon: "MousePointerClick",
     color: "sky",
+  },
+];
+
+export const TOPIC_GROUPS: TopicGroup[] = [
+  {
+    name: "Game Development",
+    icon: "Gamepad2",
+    slugs: ["game-design", "unity-game-dev"],
+  },
+  {
+    name: "Visual Design",
+    icon: "Palette",
+    slugs: ["typography", "branding-identity", "illustration"],
+  },
+  {
+    name: "Digital Design",
+    icon: "MousePointerClick",
+    slugs: ["ui-ux-design"],
+  },
+  {
+    name: "Motion & Video",
+    icon: "Film",
+    slugs: ["motion-graphics"],
+  },
+  {
+    name: "Publishing",
+    icon: "BookOpen",
+    slugs: ["publication-design"],
+  },
+  {
+    name: "Tools & Platforms",
+    icon: "Layers",
+    slugs: ["adobe-creative-cloud"],
   },
 ];
 

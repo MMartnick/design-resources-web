@@ -3,11 +3,19 @@
 export type TopicSlug =
   | "game-design"
   | "unity-game-dev"
-  | "graphic-design"
+  | "typography"
+  | "branding-identity"
+  | "illustration"
   | "adobe-creative-cloud"
   | "motion-graphics"
   | "publication-design"
   | "ui-ux-design";
+
+export interface TopicGroup {
+  name: string;
+  icon: string;
+  slugs: TopicSlug[];
+}
 
 export type CategorySlug = "news" | "tutorials" | "theory";
 

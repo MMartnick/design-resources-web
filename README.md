@@ -106,7 +106,7 @@ src/
 ### Data Model
 
 **Source** — A curated resource (e.g., "Game Developer", "NN/g"). Each source has:
-- Topics (1+): game-design, unity-game-dev, graphic-design, adobe-creative-cloud, motion-graphics, publication-design, ui-ux-design
+- Topics (1+): game-design, unity-game-dev, typography, branding-identity, illustration, adobe-creative-cloud, motion-graphics, publication-design, ui-ux-design
 - Categories (1+): news, tutorials, theory
 - Source kind: official, independent, publication, community
 - Metadata: update frequency, featured flag, evergreen flag, feed eligibility
@@ -152,13 +152,12 @@ Evergreen resources (NN/g, Laws of UX, GDC Vault, etc.) are surfaced in a dedica
 |---|---|
 | `/` | Homepage with hero, live feed, filters, featured sources, topic tiles, evergreen shelf |
 | `/library` | Full source library with multi-dimensional filtering and sorting |
-| `/topics` | Topic index page |
 | `/topic/[slug]` | Topic detail with sources, feed items, and category sections |
-| `/categories` | Category index page |
 | `/category/[slug]` | Category detail cutting across all topics |
-| `/source/[slug]` | Source detail with description, metadata, feed items, related sources |
 | `/about` | About page explaining the site |
 | `/saved` | Client-side saved sources (localStorage) |
+
+Sources link directly to their original external URL — no individual source detail pages.
 
 ## Adding Sources
 

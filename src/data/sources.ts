@@ -357,7 +357,7 @@ export const sources: Source[] = [
   },
 
   // ═══════════════════════════════════════════════════════
-  // GRAPHIC DESIGN
+  // VISUAL DESIGN (Typography, Branding, Illustration)
   // ═══════════════════════════════════════════════════════
   {
     id: "src-its-nice-that",
@@ -368,7 +368,7 @@ export const sources: Source[] = [
     whyFollow:
       "Consistently surfaces interesting creative work you wouldn't find elsewhere. A daily dose of inspiration with substance.",
     url: "https://www.itsnicethat.com",
-    topics: ["graphic-design", "publication-design"],
+    topics: ["branding-identity", "illustration", "publication-design"],
     categories: ["news", "theory"],
     sourceKind: "publication",
     updateFrequency: "high",
@@ -392,7 +392,7 @@ export const sources: Source[] = [
     whyFollow:
       "PRINT has been shaping design discourse since 1940. Its editorial lens is broader than most — design as cultural force.",
     url: "https://www.printmag.com",
-    topics: ["graphic-design", "publication-design"],
+    topics: ["branding-identity", "typography", "publication-design"],
     categories: ["news", "theory"],
     sourceKind: "publication",
     updateFrequency: "high",
@@ -416,7 +416,7 @@ export const sources: Source[] = [
     whyFollow:
       "Eye on Design brings a thoughtful, often surprising editorial voice to the design world. Great for expanding your frame of reference.",
     url: "https://eyeondesign.aiga.org",
-    topics: ["graphic-design"],
+    topics: ["branding-identity", "illustration"],
     categories: ["news", "theory"],
     sourceKind: "community",
     updateFrequency: "medium",
@@ -440,7 +440,7 @@ export const sources: Source[] = [
     whyFollow:
       "A unique European perspective on visual culture that blends design thinking with critical writing.",
     url: "https://beautitudemag.com/en/",
-    topics: ["graphic-design", "publication-design"],
+    topics: ["typography", "branding-identity", "publication-design"],
     categories: ["news", "theory"],
     sourceKind: "publication",
     updateFrequency: "low",
@@ -467,7 +467,7 @@ export const sources: Source[] = [
     whyFollow:
       "Adobe's own free learning hub is well-structured, always current, and covers every CC app.",
     url: "https://helpx.adobe.com",
-    topics: ["graphic-design", "adobe-creative-cloud"],
+    topics: ["adobe-creative-cloud"],
     categories: ["tutorials"],
     sourceKind: "official",
     updateFrequency: "medium",
@@ -514,7 +514,7 @@ export const sources: Source[] = [
     whyFollow:
       "Adobe Live sessions and MAX highlights are especially worth watching. Real artists, real workflows, high production quality.",
     url: "https://www.youtube.com/@AdobeCreativeCloud",
-    topics: ["graphic-design", "adobe-creative-cloud", "motion-graphics"],
+    topics: ["adobe-creative-cloud", "motion-graphics"],
     categories: ["tutorials"],
     sourceKind: "official",
     updateFrequency: "high",
@@ -757,7 +757,7 @@ export const sources: Source[] = [
     whyFollow:
       "The best resource for seeing how typefaces actually perform in context. Invaluable for editorial and publication designers.",
     url: "https://fontsinuse.com",
-    topics: ["publication-design", "graphic-design"],
+    topics: ["typography", "publication-design"],
     categories: ["theory"],
     sourceKind: "community",
     updateFrequency: "medium",
