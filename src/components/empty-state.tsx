@@ -25,10 +25,8 @@ export function EmptyState({
         className
       )}
     >
-      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-muted">
-        <Icon className="h-6 w-6 text-muted-foreground" />
-      </div>
-      <h3 className="mb-1 text-lg font-semibold text-foreground">{title}</h3>
+      <Icon className="mb-4 h-6 w-6 text-muted-foreground" />
+      <h3 className="mb-1 text-sm font-bold uppercase tracking-wide text-foreground">{title}</h3>
       <p className="max-w-sm text-sm text-muted-foreground">{description}</p>
       {children && <div className="mt-4">{children}</div>}
     </div>

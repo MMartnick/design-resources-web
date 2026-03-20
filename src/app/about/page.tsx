@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BookOpen, Shield, Search, Compass, Mail, Scale, AlertCircle, Lightbulb } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Mail } from "lucide-react";
 import { SITE_NAME, SITE_DISCLAIMER, SITE_CONTACT_EMAIL } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -14,7 +12,7 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-10">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <h1 className="text-3xl font-bold uppercase tracking-tight sm:text-4xl">
           About {SITE_NAME}
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
@@ -24,10 +22,9 @@ export default function AboutPage() {
         </p>
       </div>
 
-      <div className="prose prose-neutral dark:prose-invert max-w-none">
-        <section className="mb-10">
-          <h2 className="text-xl font-bold tracking-tight mb-4 flex items-center gap-2">
-            <Compass className="h-5 w-5 text-primary" />
+      <div className="space-y-10">
+        <section>
+          <h2 className="text-lg font-bold uppercase tracking-wide mb-4">
             What is this?
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
@@ -43,11 +40,10 @@ export default function AboutPage() {
           </p>
         </section>
 
-        <Separator className="my-8" />
+        <div className="border-t border-border" />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-bold tracking-tight mb-4 flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-primary" />
+        <section>
+          <h2 className="text-lg font-bold uppercase tracking-wide mb-4">
             How it works
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
@@ -67,11 +63,10 @@ export default function AboutPage() {
           </p>
         </section>
 
-        <Separator className="my-8" />
+        <div className="border-t border-border" />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-bold tracking-tight mb-4 flex items-center gap-2">
-            <Shield className="h-5 w-5 text-primary" />
+        <section>
+          <h2 className="text-lg font-bold uppercase tracking-wide mb-4">
             Content policy
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
@@ -81,19 +76,19 @@ export default function AboutPage() {
           </p>
           <ul className="space-y-2 text-muted-foreground mb-4">
             <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-muted-foreground/50 shrink-0" />
+              <span className="mt-2 h-px w-3 bg-muted-foreground shrink-0" />
               <span><strong>Titles and links</strong> pointing to the original publisher</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-muted-foreground/50 shrink-0" />
+              <span className="mt-2 h-px w-3 bg-muted-foreground shrink-0" />
               <span><strong>Very short excerpts</strong> (one or two sentences) for discovery</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-muted-foreground/50 shrink-0" />
+              <span className="mt-2 h-px w-3 bg-muted-foreground shrink-0" />
               <span><strong>Publish dates</strong> from the source&apos;s public RSS/Atom feed</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-muted-foreground/50 shrink-0" />
+              <span className="mt-2 h-px w-3 bg-muted-foreground shrink-0" />
               <span><strong>No images</strong> — we do not extract, cache, or display publisher images</span>
             </li>
           </ul>
@@ -110,11 +105,10 @@ export default function AboutPage() {
           </p>
         </section>
 
-        <Separator className="my-8" />
+        <div className="border-t border-border" />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-bold tracking-tight mb-4 flex items-center gap-2">
-            <Scale className="h-5 w-5 text-primary" />
+        <section>
+          <h2 className="text-lg font-bold uppercase tracking-wide mb-4">
             Rights &amp; attribution
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
@@ -129,11 +123,10 @@ export default function AboutPage() {
           </p>
         </section>
 
-        <Separator className="my-8" />
+        <div className="border-t border-border" />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-bold tracking-tight mb-4 flex items-center gap-2">
-            <AlertCircle className="h-5 w-5 text-primary" />
+        <section>
+          <h2 className="text-lg font-bold uppercase tracking-wide mb-4">
             Removal &amp; correction requests
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
@@ -141,7 +134,7 @@ export default function AboutPage() {
             removed or corrected, I will honor your request promptly. Please
             email:
           </p>
-          <div className="rounded-xl border border-border bg-muted/50 p-4 mb-4">
+          <div className="border border-border p-4 mb-4">
             <a
               href={`mailto:${SITE_CONTACT_EMAIL}`}
               className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
@@ -157,11 +150,10 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <Separator className="my-8" />
+        <div className="border-t border-border" />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-bold tracking-tight mb-4 flex items-center gap-2">
-            <Lightbulb className="h-5 w-5 text-primary" />
+        <section>
+          <h2 className="text-lg font-bold uppercase tracking-wide mb-4">
             Suggest a source
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
@@ -169,7 +161,7 @@ export default function AboutPage() {
             always looking for high-quality sources to add — especially in
             topics that could use more coverage.
           </p>
-          <div className="rounded-xl border border-border bg-muted/50 p-4 mb-4">
+          <div className="border border-border p-4 mb-4">
             <a
               href={`mailto:${SITE_CONTACT_EMAIL}?subject=Source%20suggestion%20for%20Designcurrent&body=Source%20name%3A%20%0ASource%20URL%3A%20%0ATopic%20area%3A%20%0AWhy%20it%E2%80%99s%20great%3A%20`}
               className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
@@ -185,28 +177,27 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <Separator className="my-8" />
+        <div className="border-t border-border" />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-bold tracking-tight mb-4 flex items-center gap-2">
-            <Search className="h-5 w-5 text-primary" />
+        <section>
+          <h2 className="text-lg font-bold uppercase tracking-wide mb-4">
             What this is not
           </h2>
           <ul className="space-y-2 text-muted-foreground">
             <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-muted-foreground/50 shrink-0" />
+              <span className="mt-2 h-px w-3 bg-muted-foreground shrink-0" />
               <span>This is not a <strong>business</strong> — it makes no money and has no advertisers.</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-muted-foreground/50 shrink-0" />
+              <span className="mt-2 h-px w-3 bg-muted-foreground shrink-0" />
               <span>This is not a <strong>content aggregator</strong> — it links out; it doesn&apos;t republish.</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-muted-foreground/50 shrink-0" />
+              <span className="mt-2 h-px w-3 bg-muted-foreground shrink-0" />
               <span>This is not a <strong>social platform</strong> — no accounts, comments, or tracking.</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-muted-foreground/50 shrink-0" />
+              <span className="mt-2 h-px w-3 bg-muted-foreground shrink-0" />
               <span>This is a <strong>personal study tool</strong> that I&apos;ve made publicly available.</span>
             </li>
           </ul>
@@ -215,14 +206,14 @@ export default function AboutPage() {
 
       <div className="mt-10 flex gap-3">
         <Link href="/">
-          <Button variant="outline" className="rounded-xl gap-2">
-            <Compass className="h-4 w-4" /> Go to Homepage
-          </Button>
+          <button className="border border-foreground px-5 py-2 text-xs font-semibold uppercase tracking-widest text-foreground hover:bg-foreground hover:text-background transition-colors">
+            Go to Homepage
+          </button>
         </Link>
         <Link href="/library">
-          <Button className="rounded-xl gap-2">
-            <BookOpen className="h-4 w-4" /> Browse Library
-          </Button>
+          <button className="bg-foreground px-5 py-2 text-xs font-semibold uppercase tracking-widest text-background hover:bg-primary transition-colors">
+            Browse Library
+          </button>
         </Link>
       </div>
     </div>
