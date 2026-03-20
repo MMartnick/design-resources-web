@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { FilterChipBar } from "@/components/filter-chip-bar";
 import { SearchField } from "@/components/search-field";
+import { FilterChipBar } from "@/components/filter-chip-bar";
 import { SourceCard } from "@/components/source-card";
 import { EmptyState } from "@/components/empty-state";
 import { SectionHeading } from "@/components/section-heading";
@@ -111,7 +109,7 @@ export function LibraryPageClient() {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <h1 className="text-3xl font-bold uppercase tracking-tight sm:text-4xl">
           Source Library
         </h1>
         <p className="mt-2 text-base text-muted-foreground max-w-2xl">
@@ -175,10 +173,10 @@ export function LibraryPageClient() {
               <button
                 key={opt.value}
                 onClick={() => setSort(opt.value)}
-                className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                className={`px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition-colors border ${
                   sort === opt.value
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-muted-foreground hover:text-foreground"
+                    ? "bg-foreground text-background border-foreground"
+                    : "bg-transparent text-muted-foreground border-border hover:border-foreground hover:text-foreground"
                 }`}
               >
                 {opt.label}
@@ -198,17 +196,14 @@ export function LibraryPageClient() {
           </div>
           {sourcesShown < filteredSources.length && (
             <div className="mt-8 flex justify-center">
-              <Button
-                variant="outline"
-                size="lg"
-                className="gap-2 rounded-xl"
+              <button
+                className="border border-foreground px-6 py-2 text-xs font-semibold uppercase tracking-widest text-foreground hover:bg-foreground hover:text-background transition-colors"
                 onClick={() =>
                   setSourcesShown((prev) => prev + SOURCES_PAGE_SIZE)
                 }
               >
-                <ChevronDown className="h-4 w-4" />
                 Show more sources ({filteredSources.length - sourcesShown} remaining)
-              </Button>
+              </button>
             </div>
           )}
         </>

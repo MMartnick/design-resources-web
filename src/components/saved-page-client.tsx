@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Bookmark } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { SourceCard } from "@/components/source-card";
 import { EmptyState } from "@/components/empty-state";
 import { useSaved } from "@/lib/hooks/use-saved";
@@ -18,10 +16,7 @@ export function SavedPageClient() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-muted">
-          <Bookmark className="h-6 w-6 text-muted-foreground" />
-        </div>
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <h1 className="text-3xl font-bold uppercase tracking-tight sm:text-4xl">
           Saved Sources
         </h1>
         <p className="mt-2 text-base text-muted-foreground max-w-2xl">
@@ -43,9 +38,9 @@ export function SavedPageClient() {
           description="Browse the library and save sources you want to keep close. They'll appear here."
         >
           <Link href="/library">
-            <Button variant="outline" className="rounded-xl mt-2">
+            <button className="mt-2 border border-foreground px-5 py-2 text-xs font-semibold uppercase tracking-widest text-foreground hover:bg-foreground hover:text-background transition-colors">
               Browse the Library
-            </Button>
+            </button>
           </Link>
         </EmptyState>
       )}

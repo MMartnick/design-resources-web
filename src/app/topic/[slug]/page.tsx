@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SourceCard } from "@/components/source-card";
 import { FeedItemCard } from "@/components/feed-item-card";
@@ -14,7 +13,6 @@ import {
   getSourcesByTopic,
   getFeedItemsByTopic,
 } from "@/lib/data";
-import { getIcon } from "@/lib/icons";
 import type { TopicSlug } from "@/lib/types";
 
 interface TopicPageProps {
@@ -44,7 +42,6 @@ export default async function TopicPage({ params }: TopicPageProps) {
   const feedItems = await getFeedItemsByTopic(topic.slug);
   const evergreenSources = sources.filter((s) => s.evergreen);
   const featuredSources = sources.filter((s) => s.featured);
-  const Icon = getIcon(topic.icon);
 
   const newsFeedItems = feedItems.filter((fi) =>
     fi.categories.includes("news")
@@ -60,10 +57,7 @@ export default async function TopicPage({ params }: TopicPageProps) {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="mb-10">
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-muted">
-          <Icon className="h-6 w-6 text-muted-foreground" />
-        </div>
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <h1 className="text-3xl font-bold uppercase tracking-tight sm:text-4xl">
           {topic.name}
         </h1>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">

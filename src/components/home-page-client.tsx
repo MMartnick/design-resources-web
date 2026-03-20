@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FilterChipBar } from "@/components/filter-chip-bar";
 import { SearchField } from "@/components/search-field";
@@ -115,21 +115,20 @@ export function HomePageClient({
   return (
     <div>
       {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden border-b border-border/30">
-        <div className="absolute inset-0 bg-gradient-to-b from-muted/50 to-transparent" />
-        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
           <div className="max-w-3xl">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-bold uppercase tracking-tight sm:text-5xl lg:text-6xl">
               {SITE_NAME}
             </h1>
             <p className="mt-4 text-lg text-muted-foreground sm:text-xl leading-relaxed">
               {SITE_TAGLINE}
             </p>
-            <p className="mt-2 text-base text-muted-foreground/80">
+            <p className="mt-2 text-base text-muted-foreground">
               {SITE_DESCRIPTION}
             </p>
-            <p className="mt-3 text-xs text-muted-foreground/60">
-              All free resources. No paywalled content. Links go to the original publisher.
+            <p className="mt-3 text-[11px] uppercase tracking-wider text-muted-foreground">
+              All free resources · No paywalled content · Links go to the original publisher
             </p>
           </div>
 
@@ -228,18 +227,15 @@ export function HomePageClient({
                   ))}
                 </div>
                 {feedItemsShown < filteredFeedItems.length && (
-                  <div className="mt-6 flex justify-center">
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="gap-2 rounded-xl"
+                  <div className="mt-8 flex justify-center">
+                    <button
+                      className="border border-foreground px-6 py-2 text-xs font-semibold uppercase tracking-widest text-foreground hover:bg-foreground hover:text-background transition-colors"
                       onClick={() =>
                         setFeedItemsShown((prev) => prev + FEED_PAGE_SIZE)
                       }
                     >
-                      <ChevronDown className="h-4 w-4" />
                       Load more articles
-                    </Button>
+                    </button>
                   </div>
                 )}
               </>
@@ -296,9 +292,9 @@ export function HomePageClient({
           </section>
 
           {/* Disclaimer */}
-          <section className="border-t border-border/30 bg-muted/30">
+          <section className="border-t border-border">
             <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-              <p className="mx-auto max-w-2xl text-center text-xs text-muted-foreground/70 leading-relaxed">
+              <p className="mx-auto max-w-2xl text-center text-xs text-muted-foreground leading-relaxed">
                 {SITE_DISCLAIMER}
               </p>
             </div>

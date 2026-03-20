@@ -8,7 +8,6 @@ import { FeedItemCard } from "@/components/feed-item-card";
 import { SectionHeading } from "@/components/section-heading";
 import { CATEGORIES, CATEGORY_MAP, TOPICS } from "@/lib/constants";
 import { getSourcesByCategory, getFeedItemsByCategory } from "@/lib/data";
-import { getIcon } from "@/lib/icons";
 import type { CategorySlug } from "@/lib/types";
 
 interface CategoryPageProps {
@@ -36,16 +35,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   const sources = getSourcesByCategory(category.slug);
   const feedItems = await getFeedItemsByCategory(category.slug);
-  const Icon = getIcon(category.icon);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="mb-10">
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-muted">
-          <Icon className="h-6 w-6 text-muted-foreground" />
-        </div>
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <h1 className="text-3xl font-bold uppercase tracking-tight sm:text-4xl">
           {category.name}
         </h1>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
