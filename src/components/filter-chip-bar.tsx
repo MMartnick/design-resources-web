@@ -16,7 +16,7 @@ export function FilterChipBar({
   className,
 }: FilterChipBarProps) {
   return (
-    <div className={cn("flex flex-wrap gap-2", className)}>
+    <div className={cn("flex flex-wrap gap-1.5", className)}>
       {options.map((option) => {
         const isActive = selected.includes(option.value);
         return (
@@ -24,11 +24,11 @@ export function FilterChipBar({
             key={option.value}
             onClick={() => onChange(option.value)}
             className={cn(
-              "inline-flex items-center rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all",
-              "hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+              "inline-flex items-center border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               isActive
-                ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                ? "border-foreground bg-foreground text-background"
+                : "border-border bg-transparent text-muted-foreground hover:border-foreground hover:text-foreground"
             )}
           >
             {option.label}

@@ -14,10 +14,10 @@ export function SectionHeading({
   children,
 }: SectionHeadingProps) {
   return (
-    <div className={cn("mb-6", className)}>
+    <div className={cn("mb-8", className)}>
       <div className="flex items-end justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
+          <h2 className="text-xl font-bold uppercase tracking-tight">{title}</h2>
           {subtitle && (
             <p className="mt-1 text-sm text-muted-foreground max-w-xl">
               {subtitle}

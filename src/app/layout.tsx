@@ -44,10 +44,10 @@ export default function RootLayout({
           <div className="relative flex min-h-screen flex-col">
             <SiteHeader />
             <div className="flex flex-1">
-              <main className="flex-1 min-w-0">{children}</main>
-              <aside className="hidden lg:block w-[260px] shrink-0 sticky top-16 self-start max-h-[calc(100vh-4rem)] overflow-y-auto border-l border-border/40 bg-background/50">
+              <aside className="hidden lg:block w-[240px] shrink-0 sticky top-14 self-start max-h-[calc(100vh-3.5rem)] overflow-y-auto border-r border-border">
                 <CategorySidebar />
               </aside>
+              <main className="flex-1 min-w-0">{children}</main>
             </div>
             <SiteFooter />
           </div>
