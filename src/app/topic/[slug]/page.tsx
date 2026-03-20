@@ -41,7 +41,6 @@ export default async function TopicPage({ params }: TopicPageProps) {
   const sources = getSourcesByTopic(topic.slug);
   const feedItems = await getFeedItemsByTopic(topic.slug);
   const evergreenSources = sources.filter((s) => s.evergreen);
-  const featuredSources = sources.filter((s) => s.featured);
 
   const newsFeedItems = feedItems.filter((fi) =>
     fi.categories.includes("news")
@@ -64,21 +63,6 @@ export default async function TopicPage({ params }: TopicPageProps) {
           {topic.description}
         </p>
       </div>
-
-      {/* Top Recommended Sources */}
-      {featuredSources.length > 0 && (
-        <section className="mb-12">
-          <SectionHeading
-            title="Recommended Sources"
-            subtitle="Free resources I find most useful for this topic."
-          />
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {featuredSources.map((source) => (
-              <SourceCard key={source.id} source={source} />
-            ))}
-          </div>
-        </section>
-      )}
 
       {/* Latest Feed Items */}
       {feedItems.length > 0 && (

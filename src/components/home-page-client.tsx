@@ -8,7 +8,6 @@ import { FilterChipBar } from "@/components/filter-chip-bar";
 import { SearchField } from "@/components/search-field";
 import { FeedItemCard } from "@/components/feed-item-card";
 import { FeaturedSourceCard } from "@/components/featured-source-card";
-import { TopicTile } from "@/components/topic-tile";
 import { EvergreenShelf } from "@/components/evergreen-shelf";
 import { SectionHeading } from "@/components/section-heading";
 import { EmptyState } from "@/components/empty-state";
@@ -21,7 +20,7 @@ import {
   TOPICS,
   CATEGORIES,
 } from "@/lib/constants";
-import type { Source, FeedItem, TopicSlug, CategorySlug } from "@/lib/types";
+import type { Source, FeedItem } from "@/lib/types";
 
 interface HomePageClientProps {
   latestFeedItems: FeedItem[];
@@ -100,17 +99,6 @@ export function HomePageClient({
         : [...prev, value]
     );
   };
-
-  const topicSourceCounts = useMemo(() => {
-    const counts = new Map<string, number>();
-    TOPICS.forEach((t) => {
-      counts.set(
-        t.slug,
-        allSources.filter((s) => s.topics.includes(t.slug)).length
-      );
-    });
-    return counts;
-  }, [allSources]);
 
   return (
     <div>
@@ -246,44 +234,6 @@ export function HomePageClient({
                 description="Try adjusting your topic or category filters to see more content."
               />
             )}
-          </section>
-
-          {/* Featured Sources */}
-          <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-            <SectionHeading
-              title="Recommended Free Sources"
-              subtitle="Resources I keep coming back to — all freely accessible."
-            >
-              <Link href="/library">
-                <Button variant="ghost" size="sm" className="gap-1 text-sm">
-                  Full library <ArrowRight className="h-3.5 w-3.5" />
-                </Button>
-              </Link>
-            </SectionHeading>
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {featuredSources.slice(0, 6).map((source) => (
-                <FeaturedSourceCard key={source.id} source={source} />
-              ))}
-            </div>
-          </section>
-
-          {/* Browse by Topic */}
-          <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-            <SectionHeading
-              title="Browse by Topic"
-              subtitle="Explore free sources organized by discipline."
-            />
-
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
-              {TOPICS.map((topic) => (
-                <TopicTile
-                  key={topic.slug}
-                  topic={topic}
-                  count={topicSourceCounts.get(topic.slug)}
-                />
-              ))}
-            </div>
           </section>
 
           {/* Evergreen Shelf */}
